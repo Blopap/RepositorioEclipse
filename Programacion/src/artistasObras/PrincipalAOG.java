@@ -18,6 +18,7 @@ public class PrincipalAOG {
 	static Vector<Obra> obras=new Vector<Obra>();
 	static final double comisionesSgae=0;
 	
+	//Test para el ejercicio de Entornos en Git
 	
 	public static void main(String[] args) {
 		
