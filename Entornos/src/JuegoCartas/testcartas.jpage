@@ -1,0 +1,3 @@
+Baraja bar= new Baraja();
+
+bar.numCartas();

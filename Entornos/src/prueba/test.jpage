@@ -1,0 +1,9 @@
+Counter counter = new Counter();
+counter.count();
+counter.getResult();
+
+
+
+
+
+
