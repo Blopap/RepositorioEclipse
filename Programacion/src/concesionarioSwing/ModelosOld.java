@@ -27,8 +27,8 @@ public class ModelosOld extends JFrame {
 	private JTextField PrecioModelo;
 	private JTextField CodigoModelo;
 	private JButton btnAñadir;
-	
-	private ArrayList<Modelo> listadoModelos= new ArrayList<Modelo>();
+
+	private ArrayList<Modelo> listadoModelos = new ArrayList<Modelo>();
 	private JLabel lblModeloIntroducido;
 
 	/**
@@ -57,12 +57,14 @@ public class ModelosOld extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0};
-		gbl_contentPane.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gbl_contentPane.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
-		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPane.columnWidths = new int[] { 0, 0, 0, 0, 0, 0, 0 };
+		gbl_contentPane.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+		gbl_contentPane.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0,
+				1.0, Double.MIN_VALUE };
+		gbl_contentPane.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0,
+				0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		contentPane.setLayout(gbl_contentPane);
-		
+
 		JLabel lblNuevoModelo = new JLabel("Nuevo modelo");
 		GridBagConstraints gbc_lblNuevoModelo = new GridBagConstraints();
 		gbc_lblNuevoModelo.gridwidth = 2;
@@ -70,7 +72,7 @@ public class ModelosOld extends JFrame {
 		gbc_lblNuevoModelo.gridx = 2;
 		gbc_lblNuevoModelo.gridy = 0;
 		contentPane.add(lblNuevoModelo, gbc_lblNuevoModelo);
-		
+
 		JLabel lblNewLabel = new JLabel("Introduzca el codigo del modelo");
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.anchor = GridBagConstraints.WEST;
@@ -79,13 +81,13 @@ public class ModelosOld extends JFrame {
 		gbc_lblNewLabel.gridx = 0;
 		gbc_lblNewLabel.gridy = 1;
 		contentPane.add(lblNewLabel, gbc_lblNewLabel);
-		
+
 		CodigoModelo = new JTextField();
 		CodigoModelo.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				if(CodigoModelo.getText().equals("El codigo existe, introduzca otro"))
-				{
+				if (CodigoModelo.getText().equals(
+						"El codigo existe, introduzca otro")) {
 					CodigoModelo.setText("");
 				}
 				CodigoModelo.setBackground(Color.white);
@@ -95,15 +97,15 @@ public class ModelosOld extends JFrame {
 		CodigoModelo.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if(CodigoModelo.getText().equals("El codigo existe, introduzca otro"))
-				{
+				if (CodigoModelo.getText().equals(
+						"El codigo existe, introduzca otro")) {
 					CodigoModelo.setText("");
 				}
 				CodigoModelo.setBackground(Color.white);
 				lblModeloIntroducido.setVisible(false);
 			}
 		});
-		
+
 		CodigoModelo.setText("");
 		GridBagConstraints gbc_CodigoModelo = new GridBagConstraints();
 		gbc_CodigoModelo.gridwidth = 3;
@@ -113,16 +115,18 @@ public class ModelosOld extends JFrame {
 		gbc_CodigoModelo.gridy = 1;
 		contentPane.add(CodigoModelo, gbc_CodigoModelo);
 		CodigoModelo.setColumns(10);
-		
-		JLabel lblIntroduzcaLaDescripcion = new JLabel("Introduzca la descripcion del modelo");
+
+		JLabel lblIntroduzcaLaDescripcion = new JLabel(
+				"Introduzca la descripcion del modelo");
 		GridBagConstraints gbc_lblIntroduzcaLaDescripcion = new GridBagConstraints();
 		gbc_lblIntroduzcaLaDescripcion.anchor = GridBagConstraints.WEST;
 		gbc_lblIntroduzcaLaDescripcion.gridwidth = 2;
 		gbc_lblIntroduzcaLaDescripcion.insets = new Insets(0, 0, 5, 5);
 		gbc_lblIntroduzcaLaDescripcion.gridx = 0;
 		gbc_lblIntroduzcaLaDescripcion.gridy = 3;
-		contentPane.add(lblIntroduzcaLaDescripcion, gbc_lblIntroduzcaLaDescripcion);
-		
+		contentPane.add(lblIntroduzcaLaDescripcion,
+				gbc_lblIntroduzcaLaDescripcion);
+
 		DescripcionModelo = new JTextField();
 		GridBagConstraints gbc_DescripcionModelo = new GridBagConstraints();
 		gbc_DescripcionModelo.gridwidth = 3;
@@ -132,7 +136,7 @@ public class ModelosOld extends JFrame {
 		gbc_DescripcionModelo.gridy = 3;
 		contentPane.add(DescripcionModelo, gbc_DescripcionModelo);
 		DescripcionModelo.setColumns(10);
-		
+
 		JLabel lblIntroduzcaElPrecio = new JLabel("Introduzca el precio Base");
 		GridBagConstraints gbc_lblIntroduzcaElPrecio = new GridBagConstraints();
 		gbc_lblIntroduzcaElPrecio.anchor = GridBagConstraints.WEST;
@@ -141,7 +145,7 @@ public class ModelosOld extends JFrame {
 		gbc_lblIntroduzcaElPrecio.gridx = 0;
 		gbc_lblIntroduzcaElPrecio.gridy = 5;
 		contentPane.add(lblIntroduzcaElPrecio, gbc_lblIntroduzcaElPrecio);
-		
+
 		PrecioModelo = new JTextField();
 		GridBagConstraints gbc_PrecioModelo = new GridBagConstraints();
 		gbc_PrecioModelo.insets = new Insets(0, 0, 5, 0);
@@ -151,34 +155,34 @@ public class ModelosOld extends JFrame {
 		gbc_PrecioModelo.gridy = 5;
 		contentPane.add(PrecioModelo, gbc_PrecioModelo);
 		PrecioModelo.setColumns(10);
-		
+
 		btnAñadir = new JButton("A\u00F1adir");
 		btnAñadir.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				
-				if(!CodigoModelo.getText().equals("El codigo existe, introduzca otro"))
-				{
-				
-					if(comprobarCodigoM(Integer.parseInt(CodigoModelo.getText())))
-					{
-						CodigoModelo.setText("El codigo existe, introduzca otro");
+
+				if (!CodigoModelo.getText().equals(
+						"El codigo existe, introduzca otro")) {
+
+					if (comprobarCodigoM(Integer.parseInt(CodigoModelo
+							.getText()))) {
+						CodigoModelo
+								.setText("El codigo existe, introduzca otro");
 						CodigoModelo.setBackground(Color.red);
-					}
-					else
-					{
-						listadoModelos.add(new Modelo(Integer.parseInt(CodigoModelo.getText()),
-																	   DescripcionModelo.getText(),
-																	   Float.parseFloat(PrecioModelo.getText())));
+					} else {
+						listadoModelos.add(new Modelo(Integer
+								.parseInt(CodigoModelo.getText()),
+								DescripcionModelo.getText(), Float
+										.parseFloat(PrecioModelo.getText())));
 						lblModeloIntroducido.setVisible(true);
-						
+
 						listadoModelos.toString();
 					}
 				}
-				
+
 			}
 		});
-		
+
 		lblModeloIntroducido = new JLabel("Modelo Introducido");
 		lblModeloIntroducido.setVisible(false);
 		GridBagConstraints gbc_lblModeloIntroducido = new GridBagConstraints();
@@ -191,22 +195,21 @@ public class ModelosOld extends JFrame {
 		gbc_btnAñadir.gridy = 8;
 		contentPane.add(btnAñadir, gbc_btnAñadir);
 	}
-	
-	//comprobar si el codigo de modelo ya existe
-	public boolean comprobarCodigoM(int codigo)//Dev true si existe, false en caso contrario
+
+	// comprobar si el codigo de modelo ya existe
+	public boolean comprobarCodigoM(int codigo)// Dev true si existe, false en
+												// caso contrario
 	{
-		boolean esta=false;
-		
-		int tam=this.listadoModelos.size();
-		
-		for(int i=0;i<tam;i++)
-		{
-			if(listadoModelos.get(i).getCodigoModelo() == codigo)
-			{				
-				esta=true;
+		boolean esta = false;
+
+		int tam = this.listadoModelos.size();
+
+		for (int i = 0; i < tam; i++) {
+			if (listadoModelos.get(i).getCodigoModelo() == codigo) {
+				esta = true;
 			}
 		}
-		
+
 		return esta;
 	}
 
