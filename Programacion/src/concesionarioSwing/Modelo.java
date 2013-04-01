@@ -46,7 +46,7 @@ public class Modelo implements java.io.Serializable{
 	}
 
 	public String toString() {
-		return this.codigoModelo+"     "+this.descripcion+"     "+this.pvp;
+		return this.codigoModelo+"    \n"+this.descripcion+"     \n"+this.pvp;
 	}
 	
 	

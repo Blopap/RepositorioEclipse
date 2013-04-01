@@ -64,6 +64,8 @@ public class Modelos extends JFrame {
 		setContentPane(contentPane);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		
+		
 		contentPane.add(tabbedPane, BorderLayout.CENTER);
 		
 		JPanel Modelo = new JPanel();
@@ -255,6 +257,7 @@ public class Modelos extends JFrame {
 		
 		final JButton btnAnterior = new JButton("Anterior");
 		
+		
 		GridBagConstraints gbc_btnAnterior = new GridBagConstraints();
 		gbc_btnAnterior.insets = new Insets(0, 0, 0, 5);
 		gbc_btnAnterior.gridx = 2;
@@ -264,23 +267,46 @@ public class Modelos extends JFrame {
 		
 		final JButton btnSiguiente = new JButton("Siguiente");
 		
+		
 		GridBagConstraints gbc_btnSiguiente = new GridBagConstraints();
 		gbc_btnSiguiente.gridx = 4;
 		gbc_btnSiguiente.gridy = 6;
 		Vista.add(btnSiguiente, gbc_btnSiguiente);
 		
-		Vista.addMouseListener(new MouseAdapter() {
+		tabbedPane.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				if(listadoModelos.size()>0)
+			public void mouseClicked(MouseEvent e) {
+				int tam=listadoModelos.size();
+				
+				if(tam > 1)
 				{
+					if(posicion==0)
+					{
+						btnAnterior.setEnabled(false);
+					}
+					else
+					{
+						btnAnterior.setEnabled(true);
+					}
 					info.setText(listadoModelos.get(posicion).toString());
+				}else if(tam==1)
+				{
+					btnAnterior.setEnabled(false);
+					btnSiguiente.setEnabled(false);
+					info.setText(listadoModelos.get(posicion).toString());
+				}else if(tam==0)
+				{
+					btnAnterior.setEnabled(false);
+					btnSiguiente.setEnabled(false);
 				}
 			}
 		});
 		
-		btnAnterior.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+		
+		
+		btnAnterior.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
 				if(posicion==1)
 				{
 					btnAnterior.setEnabled(false);
@@ -291,14 +317,12 @@ public class Modelos extends JFrame {
 				}
 				posicion--;
 				info.setText(listadoModelos.get(posicion).toString());
-				
-				
-				
 			}
 		});
 		
-		btnSiguiente.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+		btnSiguiente.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
 				if(posicion==listadoModelos.size()-2)
 				{
 					btnSiguiente.setEnabled(false);
@@ -309,7 +333,6 @@ public class Modelos extends JFrame {
 				}
 				posicion++;
 				info.setText(listadoModelos.get(posicion).toString());
-				
 			}
 		});
 		
