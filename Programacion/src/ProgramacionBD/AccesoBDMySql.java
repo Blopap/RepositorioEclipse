@@ -39,6 +39,14 @@ public class AccesoBDMySql {
 			System.out.println("Controlador JDBC no encontrado: "+e.toString());
 		}
 		catch(SQLException e){
+			if(con!=null)
+			{
+				try {
+					con.rollback();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
 			System.out.println("Excepcion capturada de SQL: "+e.toString());
 		}
 		finally{

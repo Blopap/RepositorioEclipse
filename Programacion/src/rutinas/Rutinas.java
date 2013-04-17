@@ -4,6 +4,10 @@ package rutinas;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -333,5 +337,61 @@ public class Rutinas {
             return false;
         }
     }
+    
+    public static boolean updateBD(String sql,String url, String driver)
+    //Realiza modificaciones o agregaciones de datos en la Base de datos cuya direccion es "url" 
+    //utilizando el driver "driver". Ejecuta la sentencia SQL "sql".
+    {
+    	Connection con =null;
+    	boolean estado=false;
+    	
+    	try{
+    		
+			Class.forName(driver);
+			
+			con=DriverManager.getConnection(url,"root","");
+			con.setAutoCommit(false);
+			
+			Statement stmt=con.createStatement();
+			
+			stmt.executeUpdate(sql);
+		
+			
+
+			//con.rollback();
+			con.commit();
+			stmt.close();
+			return true;
+		
+		}
+		catch(ClassNotFoundException e){
+			System.out.println("Controlador JDBC no encontrado: "+e.toString());
+		}
+		catch(SQLException e){
+			if(con!=null)
+			{
+				try {
+					con.rollback();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
+			System.out.println("Excepcion capturada de SQL: "+e.toString());
+		}
+		finally{
+			try{
+				if(con!=null)
+				{
+					con.close();
+				}
+			}
+			catch(SQLException e)
+			{
+				System.out.println("No se puede cerrar la conexion: "+e.toString());
+			}
+		}
+    	return estado;
+    }
+    
 
 }
