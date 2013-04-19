@@ -44,10 +44,11 @@ public class ConsultaCoches extends JFrame {
 	private Vector<Coches> vCoches;
 	private int posicion=0;
 	
-	private JButton bAnterior;
-	private JButton bSiguiente;
-	private JButton bModificar;
+	private JButton btnAnterior;
+	private JButton btnSiguiente;
+	private JButton btnModificar;
 	private JButton btnNuevo;
+	private JButton btnEliminar;
 	private boolean isnuevo=false;
 	
 	private Vector<Boolean> bEstado=new Vector<Boolean>();
@@ -77,8 +78,8 @@ public class ConsultaCoches extends JFrame {
 	public ConsultaCoches() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Lista de Vehiculos");
-		setBounds(100, 100, 450, 300);
-		setMinimumSize(new Dimension(450,300));
+		setBounds(100, 100, 450, 322);
+		setMinimumSize(new Dimension(450,322));
 		
 		
 		contentPane = new JPanel();
@@ -110,40 +111,44 @@ public class ConsultaCoches extends JFrame {
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 242, GroupLayout.PREFERRED_SIZE))
+					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 246, GroupLayout.PREFERRED_SIZE))
 				.addComponent(panel_2, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE)
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
 						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 187, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(panel_2, GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
-					.addContainerGap())
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE))
 		);
 		panel_2.setLayout(null);
 		
-		bAnterior = new JButton("Anterior");
-		bAnterior.setBounds(10, 18, 71, 23);
-		panel_2.add(bAnterior);
+		btnAnterior = new JButton("Anterior");
+		btnAnterior.setBounds(10, 18, 89, 23);
+		panel_2.add(btnAnterior);
 		
-		bSiguiente = new JButton("Siguiente");
-		bSiguiente.setBounds(91, 18, 89, 23);
-		panel_2.add(bSiguiente);
+		btnSiguiente = new JButton("Siguiente");
+		btnSiguiente.setBounds(109, 18, 89, 23);
+		panel_2.add(btnSiguiente);
 		
-		bModificar = new JButton("Modificar");
+		btnModificar = new JButton("Modificar");
 		
-		bModificar.setBounds(190, 18, 89, 23);
-		panel_2.add(bModificar);
+		btnModificar.setBounds(208, 18, 89, 23);
+		panel_2.add(btnModificar);
 		
 		btnNuevo = new JButton("Nuevo");
 		
-		btnNuevo.setBounds(289, 18, 89, 23);
+		btnNuevo.setBounds(208, 46, 89, 23);
 		panel_2.add(btnNuevo);
+		
+		btnEliminar = new JButton("Eliminar");
+		
+		btnEliminar.setBounds(307, 18, 89, 23);
+		panel_2.add(btnEliminar);
 		
 		tfMarca = new JTextField();
 		tfMarca.setBounds(10, 36, 212, 20);
@@ -192,18 +197,18 @@ public class ConsultaCoches extends JFrame {
 		
 		cargaPrimero();
 		
-		bSiguiente.addActionListener(new ActionListener() {
+		btnSiguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(posicion==vCoches.size()-2)
 				{
-					bSiguiente.setEnabled(false);
+					btnSiguiente.setEnabled(false);
 				}
 				
 				if(posicion<vCoches.size()-1)
 				{
-					if(!bAnterior.isEnabled())
+					if(!btnAnterior.isEnabled())
 					{
-						bAnterior.setEnabled(true);
+						btnAnterior.setEnabled(true);
 					}
 					posicion++;
 					cargaPosicion();
@@ -212,18 +217,18 @@ public class ConsultaCoches extends JFrame {
 			}
 		});
 		
-		bAnterior.addActionListener(new ActionListener() {
+		btnAnterior.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(posicion==1)
 				{
-					bAnterior.setEnabled(false);
+					btnAnterior.setEnabled(false);
 				}
 				
 				if(posicion>0)
 				{
-					if(!bSiguiente.isEnabled())
+					if(!btnSiguiente.isEnabled())
 					{
-						bSiguiente.setEnabled(true);
+						btnSiguiente.setEnabled(true);
 					}
 					posicion--;
 					cargaPosicion();
@@ -232,7 +237,7 @@ public class ConsultaCoches extends JFrame {
 			}
 		});
 		
-		bModificar.addActionListener(new ActionListener() {
+		btnModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(comprobarDatos())
 				{
@@ -256,7 +261,9 @@ public class ConsultaCoches extends JFrame {
 					{
 						btnNuevo.setText("Nuevo");
 						cargarEstadosBotones();
-						isnuevo=false;						
+						isnuevo=false;
+						posicion=0;
+						cargaPosicion();
 					}
 					
 				}
@@ -265,8 +272,59 @@ public class ConsultaCoches extends JFrame {
 			}
 		});
 		
-		
+		btnEliminar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(!isnuevo)
+				{
+					eliminarCoche();
+					
+				}
+				else
+				{
+					cancelar();
+				}
+				
+			}
+		});
 	}
+	
+	private boolean eliminarCoche()
+	//Elimina el coche que se estra mostrando actualmente
+	{
+		boolean realizado=false;
+		
+		if(JOptionPane.showConfirmDialog(this, "Desea eliminar el vehiculo con matricula: "+tfMatricula.getText()+"?")==0)
+		{
+			if(JOptionPane.showConfirmDialog(this, "Esta seguro?")==0)
+			{
+				String sentenciaSQL = "Delete FROM "+bdnombre+".tcoches " +
+									  "where tcoches.Matricula = '"+tfMatricula.getText()+"'";
+				
+				if(Rutinas.updateBD(sentenciaSQL, url, driver))
+				{
+					JOptionPane.showMessageDialog(this, "Vehiculo eliminado correctamente");
+					posicion=0;
+					cargaPosicion();
+					
+					for (int i=0;i<vCoches.size();i++)
+					{
+						if(vCoches.get(i).getMatricula().equals(tfMatricula.getText()))
+						{
+							vCoches.remove(i);
+						}
+					}
+					
+					realizado=true;
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(this, "Error al eliminar el vehiculo");
+				}
+			}
+		}
+		return realizado;
+	}
+	
 	
 	private boolean insertarCoche()
 	//Comprueba si los datos de los TextField son correctos.
@@ -278,17 +336,35 @@ public class ConsultaCoches extends JFrame {
 		if(comprobarDatos())
 		{
 			String sentenciaSQL="INSERT INTO `bdcoches`.`tcoches` (`Matricula`, `Marca`, `Modelo`, `Color`, `Anyo`, `Precio`) " +
-							 "VALUES ('"+tfMatricula.getText()+"', '"+
-							 			 tfMarca.getText()+"', '"+
-							 			 tfModelo.getText()+"', '"+
-							 			 tfColor.getText()+"', '"+
-							 			 tfAnyo.getText()+"', '"+
-							 			 tfPrecio.getText()+"');";
-			
+					 "VALUES ('"+tfMatricula.getText()+"', '"+
+					 			 tfMarca.getText()+"', '"+
+					 			 tfModelo.getText()+"', ";
+			if(tfColor.getText().equals(""))
+			{
+				sentenciaSQL+="NULL , ";
+			}
+			else
+			{
+				sentenciaSQL="'"+tfColor.getText()+"', "; 
+			}
+			if(tfAnyo.getText().equals(""))
+			{
+				sentenciaSQL+="NULL , ";
+			}
+			else
+			{
+				sentenciaSQL+="'"+tfAnyo.getText()+"', "; 
+			}
+			sentenciaSQL+="'"+tfPrecio.getText()+"');";			
 			
 			if(Rutinas.updateBD(sentenciaSQL, url, driver))
 			{	
 				JOptionPane.showMessageDialog(this, "Nuevo coche introducido correctamente");
+				
+				if(tfAnyo.getText().equals(""))
+				{
+					tfAnyo.setText("0");
+				}
 				
 				//Añade el vehiculo al vector vCoches
 				vCoches.add(new Coches(tfMatricula.getText(),
@@ -312,6 +388,7 @@ public class ConsultaCoches extends JFrame {
 	}
 	
 	private void nuevoCoche()
+	//Prepara los cuadros de texto para insertar un nuevo vehiculo.
 	{
 		tfMatricula.setText("");
 		tfMarca.setText("");
@@ -321,23 +398,32 @@ public class ConsultaCoches extends JFrame {
 		tfPrecio.setText("");
 		
 		btnNuevo.setText("Insertar"); //Cambia el texto del boton para permitir la insercion
+		btnEliminar.setText("Cancelar");//Cambia el texto del boton para permitir la cancelacion
 		guardarEstadosBotones(); //Guarda el estado de los botones.
-		
-		
+	}
+	
+	private void cancelar()
+	{		
+		btnNuevo.setText("Nuevo");
+		btnEliminar.setText("Eliminar");
+		cargarEstadosBotones();
+		posicion=0;
+		cargaPosicion();
+		isnuevo=false;
 	}
 	
 	private void guardarEstadosBotones()
 	//Para crear un nuevo vehiculo, desactiva los botones que no se pueden pulsar.
 	{
 		bEstado.clear();
-		bEstado.add(bAnterior.isEnabled());
-		bEstado.add(bSiguiente.isEnabled());
-		bEstado.add(bModificar.isEnabled());
+		bEstado.add(btnAnterior.isEnabled());
+		bEstado.add(btnSiguiente.isEnabled());
+		bEstado.add(btnModificar.isEnabled());
 		
 		tfMatricula.setEnabled(true);
-		bAnterior.setEnabled(false);
-		bSiguiente.setEnabled(false);
-		bModificar.setEnabled(false);
+		btnAnterior.setEnabled(false);
+		btnSiguiente.setEnabled(false);
+		btnModificar.setEnabled(false);
 		
 	}
 	
@@ -345,12 +431,14 @@ public class ConsultaCoches extends JFrame {
 	//Carga los estados de los botones despues de crear un vehiculo nuevo.
 	{
 		tfMatricula.setEnabled(false);
-		bAnterior.setEnabled(bEstado.get(0));
-		bSiguiente.setEnabled(bEstado.get(1));
-		bModificar.setEnabled(bEstado.get(2));
+		btnAnterior.setEnabled(bEstado.get(0));
+		btnSiguiente.setEnabled(bEstado.get(1));
+		btnModificar.setEnabled(bEstado.get(2));
 	}
 	
 	private void cargaDatos()
+	//Carga los datos en el vector de coches utilizando una consulta total
+	//a la base de datos.
 	{
 		try{
 			Class.forName(driver);
@@ -399,17 +487,17 @@ public class ConsultaCoches extends JFrame {
 		}
 	}
 	private void cargaPrimero()
+	//Carga los datos en los cuadros de texto del primer vehiculo.
+	//Si no hay datos de vehiculos, muestra un mensaje por pantalla.
 	{
-		bAnterior.setEnabled(false);
+		btnAnterior.setEnabled(false);
 		
 		if(vCoches.isEmpty())
 		{
-			bSiguiente.setEnabled(false);
-			tfMatricula.setForeground(Color.red);
-			tfMatricula.setText("No hay ningun vehiculo");
-			tfMarca.setForeground(Color.red);
-			tfMarca.setText("en la Base de Datos");
+			btnSiguiente.setEnabled(false);
+			btnModificar.setEnabled(false);
 			
+			JOptionPane.showMessageDialog(this, "Noy hay ningun vehiculo en la Base de Datos");
 		}
 		else
 		{
@@ -419,6 +507,7 @@ public class ConsultaCoches extends JFrame {
 	}
 	
 	private void cargaPosicion()
+	//Carga en los cuadros de texto los datos de los vehiculos con la posicion "posicion".
 	{
 		tfMatricula.setText(vCoches.get(posicion).getMatricula());
 		tfMarca.setText(vCoches.get(posicion).getMarca());
@@ -452,18 +541,20 @@ public class ConsultaCoches extends JFrame {
 		{
 			error=true;
 		}
+		/*
 		if(!comprobarVacio(tfColor))
 		{
 			tfColor.setBackground(Color.white);
-			tfColor.setText("null");
+			tfColor.setText("");
 			error=true;
 		}
 		if(!comprobarVacio(tfAnyo))
 		{
 			tfAnyo.setBackground(Color.white);
-			tfAnyo.setText("null");
+			tfAnyo.setText("");
 			error=true;
 		}
+		*/
 		if(!comprobarVacio(tfPrecio))
 		{
 			error=true;
@@ -493,6 +584,8 @@ public class ConsultaCoches extends JFrame {
 	}
 	
 	private boolean existeMatricula(String matricula)
+	//Comprueba si la matricula existe en el vector de coches.
+	//Devuelve true si existe y false en caso contrario
 	{
 		boolean coincide=false;
 		
@@ -508,6 +601,7 @@ public class ConsultaCoches extends JFrame {
 	}
 	
 	private void modificarVectorCoches(String matricula)
+	//Modifica los datos del vehiculo con matricula "matricula"
 	{
 		for(int i=0;i<vCoches.size();i++)
 		{
@@ -526,85 +620,24 @@ public class ConsultaCoches extends JFrame {
 	}
 	
 	private void modificarDatos()
+	//Introduce los datos de los cuadros de texto en la base de datos.
 	{
-		try{
-			Class.forName(driver);
-			
-			con=DriverManager.getConnection(url,"root","");
-			con.setAutoCommit(false);
-			
-			String sentenciaSQL;
-			
-			Statement stmt=con.createStatement();
-			
-//			if(!comprobarMatricula(tfMatricula.getText()))
-//			{
-//				System.out.println("entra");
-//				
-//				if(existeMatricula(tfMatricula.getText()))
-//				{
-//					sentenciaSQL="DELETE FROM "+bdnombre+".tcoches where MATRICULA="+tfMatricula.getText();
-//					
-//					stmt.executeUpdate(sentenciaSQL);
-//				}
-//				
-//				sentenciaSQL="INSERT INTO `bdcoches`.`tcoches` (`Matricula`, `Marca`, `Modelo`, `Color`, `Anyo`, `Precio`) " +
-//							 "VALUES ('"+tfMatricula.getText()+"', '"+
-//							 			 tfMarca.getText()+"', '"+
-//							 			 tfModelo.getText()+"', '"+
-//							 			 tfColor.getText()+"', "+
-//							 			 tfAnyo.getText()+", "+
-//							 			 tfPrecio.getText()+")";
-//				stmt.executeUpdate(sentenciaSQL);
-//				
-//				cargaMatriculas();
-//				
-//			}
-//			else
-//			{
-				sentenciaSQL="UPDATE "+bdnombre+".tcoches SET Marca='"+tfMarca.getText()+
-																	"', Modelo='"+tfModelo.getText()+
-																	"', Color='"+tfColor.getText()+
-																	"', Anyo="+tfAnyo.getText()+
-																	", Precio="+tfPrecio.getText()+
-																	"where Matricula='"+tfMatricula.getText()+"'";
-				
-				stmt.executeUpdate(sentenciaSQL);
-				modificarVectorCoches(tfMatricula.getText());
-				
-				JOptionPane.showMessageDialog(this, "Cambios realizados correctamente");
-//			}
-			
-			//con.rollback();
-			con.commit();
-			stmt.close();
+		String sentenciaSQL="UPDATE "+bdnombre+".tcoches SET Marca='"+tfMarca.getText()+
+				"', Modelo='"+tfModelo.getText()+
+				"', Color='"+tfColor.getText()+
+				"', Anyo="+tfAnyo.getText()+
+				", Precio="+tfPrecio.getText()+
+				"where Matricula='"+tfMatricula.getText()+"'";
 		
+		if(Rutinas.updateBD(sentenciaSQL, url, driver))
+		{
+			JOptionPane.showMessageDialog(this, "Cambios realizados correctamente");
 		}
-		catch(ClassNotFoundException e){
-			System.out.println("Controlador JDBC no encontrado: "+e.toString());
+		else
+		{
+			JOptionPane.showMessageDialog(this, "Error al realizar los cambios");
 		}
-		catch(SQLException e){
-			if(con!=null)
-			{
-				try {
-					con.rollback();
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
-			}
-			System.out.println("Excepcion capturada de SQL: "+e.toString());
-		}
-		finally{
-			try{
-				if(con!=null)
-				{
-					con.close();
-				}
-			}
-			catch(SQLException e)
-			{
-				System.out.println("No se puede cerrar la conexion: "+e.toString());
-			}
-		}
+		
+		
 	}
 }
