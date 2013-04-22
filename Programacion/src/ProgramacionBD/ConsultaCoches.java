@@ -260,10 +260,12 @@ public class ConsultaCoches extends JFrame {
 					if(insertarCoche())
 					{
 						btnNuevo.setText("Nuevo");
+						btnEliminar.setText("Eliminar");
 						cargarEstadosBotones();
 						isnuevo=false;
-						posicion=0;
+						//posicion=0;
 						cargaPosicion();
+						compruebaEstado();
 					}
 					
 				}
@@ -302,18 +304,38 @@ public class ConsultaCoches extends JFrame {
 				
 				if(Rutinas.updateBD(sentenciaSQL, url, driver))
 				{
-					JOptionPane.showMessageDialog(this, "Vehiculo eliminado correctamente");
-					posicion=0;
-					cargaPosicion();
+					if(posicion!=0)
+					{
+//						if(posicion==1)
+//						{
+//							btnAnterior.setEnabled(false);
+//						}
+						posicion--;
+					}
+					else
+					{
+						
+						posicion=0;
+					}
 					
 					for (int i=0;i<vCoches.size();i++)
 					{
+						
 						if(vCoches.get(i).getMatricula().equals(tfMatricula.getText()))
 						{
 							vCoches.remove(i);
 						}
 					}
-					
+					if(!vCoches.isEmpty())
+					{
+						cargaPosicion();
+					}
+					else
+					{
+						vaciarRegistros();
+					}
+					compruebaEstado();
+					JOptionPane.showMessageDialog(this, "Vehiculo eliminado correctamente");
 					realizado=true;
 				}
 				else
@@ -390,24 +412,31 @@ public class ConsultaCoches extends JFrame {
 	private void nuevoCoche()
 	//Prepara los cuadros de texto para insertar un nuevo vehiculo.
 	{
-		tfMatricula.setText("");
-		tfMarca.setText("");
-		tfModelo.setText("");
-		tfColor.setText("");
-		tfAnyo.setText("");
-		tfPrecio.setText("");
+		vaciarRegistros();
 		
 		btnNuevo.setText("Insertar"); //Cambia el texto del boton para permitir la insercion
 		btnEliminar.setText("Cancelar");//Cambia el texto del boton para permitir la cancelacion
 		guardarEstadosBotones(); //Guarda el estado de los botones.
 	}
 	
+	private void vaciarRegistros()
+	//Vacia los cuadros de texto
+	{
+		tfMatricula.setText("");
+		tfMarca.setText("");
+		tfModelo.setText("");
+		tfColor.setText("");
+		tfAnyo.setText("");
+		tfPrecio.setText("");
+	}
+	
+	
 	private void cancelar()
 	{		
 		btnNuevo.setText("Nuevo");
 		btnEliminar.setText("Eliminar");
 		cargarEstadosBotones();
-		posicion=0;
+		//posicion=0;
 		cargaPosicion();
 		isnuevo=false;
 	}
@@ -486,22 +515,57 @@ public class ConsultaCoches extends JFrame {
 			}
 		}
 	}
-	private void cargaPrimero()
-	//Carga los datos en los cuadros de texto del primer vehiculo.
-	//Si no hay datos de vehiculos, muestra un mensaje por pantalla.
+	private boolean compruebaEstado()
+	//Comprueba el estado del vector y dependiendo de los datos activa o desactiva los botones
+	
 	{
-		btnAnterior.setEnabled(false);
+		boolean correcto=false;
 		
 		if(vCoches.isEmpty())
 		{
+			btnAnterior.setEnabled(false);
 			btnSiguiente.setEnabled(false);
 			btnModificar.setEnabled(false);
-			
-			JOptionPane.showMessageDialog(this, "Noy hay ningun vehiculo en la Base de Datos");
+			btnEliminar.setEnabled(false);
+		}
+		else if(vCoches.size()==1)
+		{
+			btnAnterior.setEnabled(false);
+			btnSiguiente.setEnabled(false);
+			btnModificar.setEnabled(true);
+			btnEliminar.setEnabled(true);
+			correcto=true;
+		}
+//		else if(vCoches.size()==posicion+1)
+//		{
+//			btnAnterior.setEnabled(false);
+//			btnSiguiente.setEnabled(false);
+//		}
+		else
+		{
+			btnModificar.setEnabled(true);
+			btnEliminar.setEnabled(true);
+			if(posicion!=vCoches.size()-1)
+			{
+				btnSiguiente.setEnabled(true);
+			}
+			correcto=true;
+		}
+		return correcto;
+	}
+	
+	private void cargaPrimero()
+	//Carga los datos en los cuadros de texto del primer vehiculo.
+	{
+		btnAnterior.setEnabled(false);
+		
+		if(compruebaEstado())
+		{
+			cargaPosicion();
 		}
 		else
 		{
-			cargaPosicion();
+			JOptionPane.showMessageDialog(this, "No hay ningun vehiculo en la Base de Datos");
 		}
 			
 	}
@@ -612,9 +676,6 @@ public class ConsultaCoches extends JFrame {
 				vCoches.get(i).setColor(tfColor.getText());
 				vCoches.get(i).setAnyo(Integer.parseInt(tfAnyo.getText()));
 				vCoches.get(i).setPrecio(Float.parseFloat(tfPrecio.getText()));
-				
-				
-				
 			}
 		}
 	}
@@ -631,6 +692,7 @@ public class ConsultaCoches extends JFrame {
 		
 		if(Rutinas.updateBD(sentenciaSQL, url, driver))
 		{
+			modificarVectorCoches(tfMatricula.getText());
 			JOptionPane.showMessageDialog(this, "Cambios realizados correctamente");
 		}
 		else
