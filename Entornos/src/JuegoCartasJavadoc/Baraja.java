@@ -3,10 +3,19 @@ package JuegoCartasJavadoc;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Una clase que representa una baraja para un juego de cartas
+ * @author Pablo Amilburu
+ *
+ */
+
 public class Baraja {
 	
 	private ArrayList<Carta> baraja;
 	
+	/**
+	 * Crea una baraja y la llena con cartas sin ordenar.
+	 */
 	public Baraja()
 	{
 		this.baraja= new ArrayList<Carta>();
@@ -15,6 +24,10 @@ public class Baraja {
 		
 	}
 	
+	
+	/**
+	 * Rellena una baraja con diez cartas de cuatro palos.
+	 */
 	public void llenar()
 	{
 		for (int i=1;i<=4;i++)
@@ -30,6 +43,9 @@ public class Baraja {
 		}
 	}
 	
+	/**
+	 * Desordena la baraja.  
+	 */
 	public void barajar()
 	{
 		int tamaño,num,pos;
@@ -64,6 +80,11 @@ public class Baraja {
 		}
 	}
 	
+	
+	/**
+	 * Devuelve la primera carta de la baraja.
+	 * @return La carta que ocupa la posicion cero de la baraja.
+	 */
 	public Carta sacarCarta()
 	{
 		Carta aux=this.baraja.get(0);
@@ -71,16 +92,28 @@ public class Baraja {
 		return aux;
 	}
 	
+	/**
+	 * Introduce una carta en la ultima posicion de la baraja.
+	 * @param c La carta que se introduce en la baraja.
+	 */
 	public void meterCarta(Carta c)
 	{
 		this.baraja.add(this.baraja.size(),c);
 	}
 	
+	/**
+	 * Calcula si quedan cartas en la baraja.
+	 * @return true si no quedan cartas y false en caso contrario.
+	 */
 	public boolean quedanCartas()
 	{
 		return this.baraja.isEmpty();
 	}
 	
+	/**
+	 * Calcula el numero de cartas que tiene la baraja
+	 * @return El numero de cartas de la baraja
+	 */
 	public int numCartas()
 	{
 		return this.baraja.size();

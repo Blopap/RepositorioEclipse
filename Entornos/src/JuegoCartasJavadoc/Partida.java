@@ -4,6 +4,11 @@ import java.util.ArrayList;
 
 import rutinas.Rutinas;
 
+/**
+ * Una clase que representa una Partida de cartas
+ * @author Pablo Blopap
+ *
+ */
 public class Partida {
 	
 	private Baraja baraja;
@@ -12,6 +17,11 @@ public class Partida {
 	
 	private ArrayList<Jugador> jugadores;
 	
+	/**
+	 * Crea una partida de cartas.
+	 * @param numJ Numero de jugadores que tiene la partida.
+	 * @param numCartasJ Numero de cartas que tendrán los jugadores.
+	 */
 	public Partida(int numJ, int numCartasJ)
 	{
 		this.baraja=new Baraja();
@@ -24,6 +34,9 @@ public class Partida {
 		}
 	}
 	
+	/**
+	 * Reparte cartas a los jugadores de las partidas. 
+	 */
 	public void repartir()
 	{
 		this.baraja.barajar();
@@ -40,6 +53,9 @@ public class Partida {
 		}
 	}
 	
+	/**
+	 * Recoje las cartas de todos los jugadores y las mete a la baraja de la partida
+	 */
 	public void recojer()
 	{
 		int j;
