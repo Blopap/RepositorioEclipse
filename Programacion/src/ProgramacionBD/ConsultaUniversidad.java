@@ -1,6 +1,5 @@
 package ProgramacionBD;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -22,6 +21,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ConsultaUniversidad extends JFrame {
 
@@ -49,6 +50,18 @@ public class ConsultaUniversidad extends JFrame {
 	private String url="jdbc:mysql://localhost:3306/"+bdnombre;
 	
 	Connection con = null;
+	int fila=1;
+	boolean nuevo=false;
+	
+	private JButton btnAnterior;
+	private JButton btnSiguiente;
+	private JButton btnNuevo;	
+	private JButton btnModificar;	
+	private JButton btnBorrar;	
+	private JButton btnVolver;	
+	private JButton btnCargar;	
+	private JButton btnCancelar;
+	private JLabel lblNumAlumnos;
 	
 
 	/**
@@ -207,7 +220,7 @@ public class ConsultaUniversidad extends JFrame {
 					.addContainerGap())
 		);
 		
-		JLabel lblNumAlumnos = new JLabel("0");
+		lblNumAlumnos = new JLabel("0");
 		lblNumAlumnos.setForeground(Color.RED);
 		lblNumAlumnos.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
 		lblNumAlumnos.setHorizontalAlignment(SwingConstants.CENTER);
@@ -443,17 +456,17 @@ public class ConsultaUniversidad extends JFrame {
 		AlumnoBotonBusqueda.setBounds(0, 82, 518, 69);
 		AlumnoBotonBusqueda.setBorder(new LineBorder(new Color(0, 0, 0), 3));
 		
-		JButton btnNuevo = new JButton("Nuevo");
+		btnNuevo = new JButton("Nuevo");
 		
-		JButton btnModificar = new JButton("Modificar");
+		btnModificar = new JButton("Modificar");
 		
-		JButton btnBorrar = new JButton("Borrar");
+		btnBorrar = new JButton("Borrar");
 		
-		JButton btnVolver = new JButton("Volver");
+		btnVolver = new JButton("Volver");
 		
-		JButton btnCargar = new JButton("Cargar");
+		btnCargar = new JButton("Cargar");
 		
-		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar = new JButton("Cancelar");
 		
 		textField_1 = new JTextField();
 		textField_1.setColumns(10);
@@ -483,9 +496,10 @@ public class ConsultaUniversidad extends JFrame {
 		AlumnoBotonBusqueda.setLayout(gl_AlumnoBotonBusqueda);
 		AlumnosBoton.setLayout(null);
 		
-		JButton btnAnterior = new JButton("Anterior");
+		btnAnterior = new JButton("Anterior");
+				
+		btnSiguiente = new JButton("Siguiente");
 		
-		JButton btnSiguiente = new JButton("Siguiente");
 		AlumnosBoton.add(AlumnoBotonSigAnt);
 		GroupLayout gl_AlumnoBotonSigAnt = new GroupLayout(AlumnoBotonSigAnt);
 		gl_AlumnoBotonSigAnt.setHorizontalGroup(
@@ -543,23 +557,112 @@ public class ConsultaUniversidad extends JFrame {
 		AlumnosBoton.add(AlumnoBotonBusqueda);
 		AlumnoPrincipal.setLayout(gl_AlumnoPrincipal);
 		contentPane.setLayout(gl_contentPane);
+		
+		//Comprueba el numero de filas y realiza las modificaciones necesarias.
+		if(comprobarBotones())
+		{
+			//Carga los datos de la primera fila.
+			cargaDatos(fila);
+			btnAnterior.setEnabled(false);
+			tfDni.setEnabled(false);
+		}
+		
+		
+		
+		btnSiguiente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				fila++;
+				if(cargaDatos(fila)==-2)
+				{
+					btnSiguiente.setEnabled(false);
+				}
+				else if(!btnAnterior.isEnabled())
+				{
+					btnAnterior.setEnabled(true);
+				}
+					
+			}
+		});
+		
+		btnAnterior.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				fila--;
+				if(cargaDatos(fila)==-1)
+				{
+					btnAnterior.setEnabled(false);
+				}
+				else if(!btnSiguiente.isEnabled())
+				{
+					btnSiguiente.setEnabled(true);
+				}
+			}
+		});
+		
+		btnNuevo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(!nuevo)
+				{
+					tfDni.setEnabled(true);
+					limpiarCampos();
+					nuevo=true;
+				}
+				else
+				{
+					
+				}
+				
+				
+			}
+		});
+		
+		
 	}
 	
-	private void cargaDatos(int posicion)
+	private int cargaDatos(int posicion)
+	//Carga los datos de una columna en la ventana.
+	//Devuelve -1 si muestra la primera posicion y devuelve -2 si es la ultima
 	{
+		int tieneSigAnt=0;
+		
 		try{
 			Class.forName(driver);
 			
 			con=DriverManager.getConnection(url,"root","");
 			
-			Statement stmt=con.createStatement();
+			Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+				     							ResultSet.CONCUR_READ_ONLY);
 			
 			String sentenciaSQL="Select * from alumno";
 			
 			ResultSet rs=stmt.executeQuery(sentenciaSQL);
-			while(rs.next())
+			
+			if(rs.absolute(posicion))
 			{
-				//////
+				tfDni.setText(rs.getString(1));
+				tfIdAlumno.setText(rs.getString(2));
+				tfNombre.setText(rs.getString(3));
+				tfApellido1.setText(rs.getString(4));
+				tfApellido_2.setText(rs.getString(5));
+				tfCiudad.setText(rs.getString(6));
+				tfCalle.setText(rs.getString(7));
+				tfNumero.setText(rs.getString(8));
+				tfPiso.setText(rs.getString(9));
+				tfLetra.setText(rs.getString(10));
+				tfTelefono.setText(rs.getString(11));
+				tfNacimiento_1.setText(rs.getString(12));
+				tfNacimiento_2.setText(rs.getString(13));
+				tfNacimiento_3.setText(rs.getString(14));
+				tfSexo.setText(rs.getString(15));
+				
+				
+			}
+			if(rs.isFirst())
+			{
+				tieneSigAnt=-1;
+			}
+			else if(rs.isLast())
+			{
+				tieneSigAnt=-2;
 			}
 			
 			rs.close();
@@ -584,10 +687,102 @@ public class ConsultaUniversidad extends JFrame {
 				System.out.println("No se puede cerrar la conexion: "+e.toString());
 			}
 		}
+		return tieneSigAnt;
 	}
 	
+	private int numeroAlumnos()
+	//Devuelve el numero de alumnos que tiene la base de datos.
+	{
+		int totalAlumnos=0;
+		
+		try{
+			Class.forName(driver);
+			
+			con=DriverManager.getConnection(url,"root","");
+			
+			Statement stmt=con.createStatement();
+			
+			String sentenciaSQL="Select * from alumno";
+			
+			ResultSet rs=stmt.executeQuery(sentenciaSQL);
+			
+			while(rs.next())
+			{
+				totalAlumnos++;
+			}
+			
+			rs.close();
+			stmt.close();
+		
+		}
+		catch(ClassNotFoundException e){
+			System.out.println("Controlador JDBC no encontrado: "+e.toString());
+		}
+		catch(SQLException e){
+			System.out.println("Excepcion capturada de SQL: "+e.toString());
+		}
+		finally{
+			try{
+				if(con!=null)
+				{
+					con.close();
+				}
+			}
+			catch(SQLException e)
+			{
+				System.out.println("No se puede cerrar la conexion: "+e.toString());
+			}
+		}
+		return totalAlumnos;
+	}
 	
+	private boolean comprobarBotones()
+	{
+		int numAlumn=numeroAlumnos();
+		if(numAlumn == 0)
+		{
+			btnAnterior.setEnabled(false);
+			btnSiguiente.setEnabled(false);
+			btnModificar.setEnabled(false);
+			btnBorrar.setEnabled(false);
+			btnVolver.setEnabled(false);
+			btnCargar.setEnabled(false);
+			btnCancelar.setEnabled(false);
+			return false;
+		}
+		else if (numAlumn == 1)
+		{
+			btnAnterior.setEnabled(false);
+			btnSiguiente.setEnabled(false);
+			btnModificar.setEnabled(true);
+			btnBorrar.setEnabled(true);
+			btnVolver.setEnabled(true);
+			btnCargar.setEnabled(true);
+			btnCancelar.setEnabled(true);
+		}
+		
+		lblNumAlumnos.setText(""+numAlumn);
+		return true;
+	}
 	
+	private void limpiarCampos()
+	{
+		tfDni.setText("");
+		tfIdAlumno.setText("");
+		tfNombre.setText("");
+		tfApellido1.setText("");
+		tfApellido_2.setText("");
+		tfCiudad.setText("");
+		tfCalle.setText("");
+		tfNumero.setText("");
+		tfPiso.setText("");
+		tfLetra.setText("");
+		tfTelefono.setText("");
+		tfNacimiento_1.setText("");
+		tfNacimiento_2.setText("");
+		tfNacimiento_3.setText("");
+		tfSexo.setText("");
+	}
 	
 	
 	
