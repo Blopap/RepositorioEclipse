@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import rutinas.Rutinas;
 
 /**
- * Una clase que representa una Partida de cartas
- * @author Pablo Blopap
+ * Clase que representa una Partida de cartas.
+ * @author Pablo Amilburu
  *
  */
 public class Partida {
@@ -54,7 +54,7 @@ public class Partida {
 	}
 	
 	/**
-	 * Recoje las cartas de todos los jugadores y las mete a la baraja de la partida
+	 * Recoje las cartas de todos los jugadores y las mete a la baraja de la partida.
 	 */
 	public void recojer()
 	{
@@ -71,6 +71,9 @@ public class Partida {
 	}
 	
 	
+	/**
+	 * Permite a los jugadores descartarse de cartas de sus barajas.
+	 */
 	public void descartar()
 	{
 		for(int i=0;i<this.jugadores.size();i++)
@@ -91,6 +94,9 @@ public class Partida {
 		}
 	}
 	
+	/**
+	 * Muestra por pantalla el jugador con cartas con valor mayor.
+	 */
 	public void ganaGrande()
 	{
 		int jugador=0;
@@ -111,6 +117,9 @@ public class Partida {
 		
 	}
 	
+	/**
+	 * Realiza partidas hasta que se desee acabar.
+	 */
 	public void jugar()
 	{
 		do{

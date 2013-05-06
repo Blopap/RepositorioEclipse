@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import rutinas.Rutinas;
 
 /**
- * Una clase que representa a un jugador en un juego de cartas
- * @author Pablo Blopap
+ * Clase que representa a un jugador en un juego de cartas.
+ * @author Pablo Amilburu
  *
  */
 public class Jugador {
@@ -15,7 +15,7 @@ public class Jugador {
 	
 	/**
 	 * Crea un nuevo jugador. 
-	 * Pide por pantalla en nombre del jugador
+	 * Pide por pantalla en nombre del jugador.
 	 * @param nCartasJ Asigna este valor al numero de cartas que tendrá el jugador.
 	 */
 	public Jugador(int nCartasJ)
@@ -26,8 +26,8 @@ public class Jugador {
 	}
 	
 	/**
-	 * Devuelve el nombre del jugador
-	 * @return Nombre del jugador
+	 * Devuelve el nombre del jugador.
+	 * @return Nombre del jugador.
 	 */
 	public String getNombre()
 	{
@@ -48,7 +48,7 @@ public class Jugador {
 	}
 	
 	/**
-	 * Introduce en el mazo del jugador una Carta
+	 * Introduce en el mazo del jugador una Carta.
 	 * @param c Carta que se introduce en el mazo.
 	 */
 	public void recogerCarta(Carta c)
@@ -58,7 +58,7 @@ public class Jugador {
 	
 	/**
 	 * Obtiene si el jugador tiene cartas en el mazo.
-	 * @return true si no quedan cartas y false en caso contrario
+	 * @return true si no quedan cartas y false en caso contrario.
 	 */
 	public boolean tieneCartas()
 	{
@@ -91,8 +91,8 @@ public class Jugador {
 	}
 	
 	/**
-	 * Devuelve el valor que tienen las cartas del jugador
-	 * @return Valor de las cartas
+	 * Devuelve el valor que tienen las cartas del jugador.
+	 * @return Valor de las cartas.
 	 */
 	public double valorCartas()
 	{

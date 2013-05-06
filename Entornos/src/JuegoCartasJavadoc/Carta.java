@@ -2,7 +2,7 @@ package JuegoCartasJavadoc;
 
 
 /**
- * Una clase que representa una carta para un juego de cartas.
+ * Clase que representa una carta para un juego de cartas.
  * @author Pablo Amilburu
  *
  */
@@ -14,9 +14,9 @@ public class Carta {
 	private final static String [] nums={ "As", "Dos", "Tres", "Cuatro", "Cinco", "Seis", "Siete", "", "", "Sota", "Caballo", "Rey"};
 	
 	/**
-	 * Crea una carta a partir de su palo y su indice
-	 * @param palo El palo de la carta
-	 * @param num El indice de la carta
+	 * Crea una carta a partir de su palo y su indice.
+	 * @param palo El palo de la carta.
+	 * @param num El indice de la carta.
 	 */
 	public Carta(int palo,int num)
 	{
@@ -26,8 +26,8 @@ public class Carta {
 	}
 	
 	/**
-	 * Cambia el valor del palo
-	 * @param palo Nuevo valor del palo
+	 * Cambia el valor del palo.
+	 * @param palo Nuevo valor del palo.
 	 */
 	public void setPalo(int palo)
 	{
@@ -35,8 +35,8 @@ public class Carta {
 	}
 	
 	/**
-	 * Devuelve el palo de la carta
-	 * @return El valor del palo
+	 * Devuelve el palo de la carta.
+	 * @return El valor del palo.
 	 */
 	public int getPalo()
 	{
@@ -44,8 +44,8 @@ public class Carta {
 	}
 	
 	/**
-	 * Cambia el valor del indice
-	 * @param num Nuevo valor del indice
+	 * Cambia el valor del indice.
+	 * @param num Nuevo valor del indice.
 	 */
 	public void setNumero(int num)
 	{
@@ -53,8 +53,8 @@ public class Carta {
 	}
 	
 	/**
-	 * Devuelve el valor del indice
-	 * @return El valor del indice
+	 * Devuelve el valor del indice.
+	 * @return El valor del indice.
 	 */
 	public int getNum()
 	{
@@ -62,7 +62,7 @@ public class Carta {
 	}
 	
 	/**
-	 * Devuelve el valor del indice multiplicado por diez
+	 * Devuelve el valor del indice multiplicado por diez.
 	 * @return El valor de la carta.
 	 */
 	public double valor()
@@ -71,7 +71,7 @@ public class Carta {
 	}
 	
 	/**
-	 * Devuelve una cadena con el valor de la carta
+	 * Devuelve una cadena con el valor de la carta.
 	 * @return Devuelve la cadena.
 	 */
 	public String muestra()

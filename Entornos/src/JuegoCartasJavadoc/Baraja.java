@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * Una clase que representa una baraja para un juego de cartas
+ * Clase que representa una baraja para un juego de cartas.
  * @author Pablo Amilburu
  *
  */
@@ -111,8 +111,8 @@ public class Baraja {
 	}
 	
 	/**
-	 * Calcula el numero de cartas que tiene la baraja
-	 * @return El numero de cartas de la baraja
+	 * Calcula el numero de cartas que tiene la baraja.
+	 * @return El numero de cartas de la baraja.
 	 */
 	public int numCartas()
 	{
