@@ -8,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -15,6 +16,9 @@ import javax.swing.JTabbedPane;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.JButton;
+
+import rutinas.Rutinas;
+
 import java.awt.Font;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -42,7 +46,7 @@ public class ConsultaUniversidad extends JFrame {
 	private JTextField tfNumero;
 	private JTextField tfApellido_2;
 	private JTextField tfSexo;
-	private JTextField textField_1;
+	private JTextField tfBuscar;
 	
 
 	private String driver="com.mysql.jdbc.Driver";
@@ -61,6 +65,7 @@ public class ConsultaUniversidad extends JFrame {
 	private JButton btnVolver;	
 	private JButton btnCargar;	
 	private JButton btnCancelar;
+	private JButton btnBuscar;
 	private JLabel lblNumAlumnos;
 	
 
@@ -468,16 +473,17 @@ public class ConsultaUniversidad extends JFrame {
 		
 		btnCancelar = new JButton("Cancelar");
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
+		tfBuscar = new JTextField();
+		tfBuscar.setColumns(10);
 		
-		JButton btnBuscar = new JButton("Buscar");
+		btnBuscar = new JButton("Buscar");
+		
 		GroupLayout gl_AlumnoBotonBusqueda = new GroupLayout(AlumnoBotonBusqueda);
 		gl_AlumnoBotonBusqueda.setHorizontalGroup(
 			gl_AlumnoBotonBusqueda.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_AlumnoBotonBusqueda.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(textField_1, GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE)
+					.addComponent(tfBuscar, GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE)
 					.addContainerGap())
 				.addGroup(gl_AlumnoBotonBusqueda.createSequentialGroup()
 					.addGap(216)
@@ -488,7 +494,7 @@ public class ConsultaUniversidad extends JFrame {
 			gl_AlumnoBotonBusqueda.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_AlumnoBotonBusqueda.createSequentialGroup()
 					.addGap(6)
-					.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addComponent(tfBuscar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnBuscar)
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -608,10 +614,16 @@ public class ConsultaUniversidad extends JFrame {
 				}
 				else
 				{
-					
+					insertarAlumno();					
 				}
 				
 				
+			}
+		});
+		
+		btnBuscar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				buscarAlumno();
 			}
 		});
 		
@@ -782,6 +794,104 @@ public class ConsultaUniversidad extends JFrame {
 		tfNacimiento_2.setText("");
 		tfNacimiento_3.setText("");
 		tfSexo.setText("");
+	}
+	
+	private void insertarAlumno()
+	{
+		String sentencia = "INSERT INTO "+bdnombre+".`alumno` (`DNI`, `IdAlumno`, `Nombre`, " +
+				"`Apellido1`, `Apellido2`, `Ciudad`, `Calle`, `Numero`, `Piso`, `Letra`, " +
+				"`Telefono`, `DiaNacimiento`, `MesNacimiento`, `AnioNacimiento`, `Sexo`) " +
+				"VALUES ('"+tfDni.getText()+"', '"
+						+tfIdAlumno.getText()+"', '"
+						+tfNombre.getText()+"', '"
+						+tfApellido1.getText()+"', '"
+						+tfApellido_2.getText()+"', '"
+						+tfCiudad.getText()+"', '"
+						+tfCalle.getText()+"', '"
+						+tfNumero.getText()+"', '"
+						+tfPiso.getText()+"', '"
+						+tfLetra.getText()+"', '"
+						+tfTelefono.getText()+"', '"
+						+tfNacimiento_1.getText()+"', '"
+						+tfNacimiento_2.getText()+"', '"
+						+tfNacimiento_3.getText()+"', '"
+						+tfSexo.getText()+"')";
+		
+		if(Rutinas.updateBD(sentencia, url, driver))
+		{
+			JOptionPane.showMessageDialog(this, "Alumno introducido correctamente");
+			comprobarBotones();
+			tfDni.setEnabled(false);
+			nuevo=false;
+		}
+		else
+		{
+			JOptionPane.showMessageDialog(this, "Error al introducir el alumno");
+		}
+	}
+	private boolean buscarAlumno()
+	{
+		boolean encontrado=false;
+		
+		try{
+			Class.forName(driver);
+			
+			con=DriverManager.getConnection(url,"root","");
+			
+			Statement stmt=con.createStatement();
+			
+			String sentenciaSQL="Select * from alumno where Nombre = '"+tfBuscar.getText()+"'";
+			
+			ResultSet rs=stmt.executeQuery(sentenciaSQL);
+			
+			if(rs.next())
+			{
+				tfDni.setText(rs.getString(1));
+				tfIdAlumno.setText(rs.getString(2));
+				tfNombre.setText(rs.getString(3));
+				tfApellido1.setText(rs.getString(4));
+				tfApellido_2.setText(rs.getString(5));
+				tfCiudad.setText(rs.getString(6));
+				tfCalle.setText(rs.getString(7));
+				tfNumero.setText(rs.getString(8));
+				tfPiso.setText(rs.getString(9));
+				tfLetra.setText(rs.getString(10));
+				tfTelefono.setText(rs.getString(11));
+				tfNacimiento_1.setText(rs.getString(12));
+				tfNacimiento_2.setText(rs.getString(13));
+				tfNacimiento_3.setText(rs.getString(14));
+				tfSexo.setText(rs.getString(15));
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(this, "Alumno no encontrado");
+			}
+			
+			rs.close();
+			stmt.close();
+		
+		}
+		catch(ClassNotFoundException e){
+			System.out.println("Controlador JDBC no encontrado: "+e.toString());
+		}
+		catch(SQLException e){
+			System.out.println("Excepcion capturada de SQL: "+e.toString());
+		}
+		finally{
+			try{
+				if(con!=null)
+				{
+					con.close();
+				}
+			}
+			catch(SQLException e)
+			{
+				System.out.println("No se puede cerrar la conexion: "+e.toString());
+			}
+		}
+		
+		
+		return encontrado;
 	}
 	
 	
