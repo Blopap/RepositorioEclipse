@@ -1,0 +1,75 @@
+Proyecto Gestion de vehiculos.
+
+1º Programacion DAW 2012/2013.
+
+Gestion de vehiculos de un taller o derivados.
+
+Consistirá en una base de datos en la que se guardaran todos los datos sobre:
+
+Clientes
+Vehiculos
+Operaciones realizadas a dichos vehiculos
+Usuarios permitidos en la aplicacion
+
+Se realizará una interfaz grafica para la gestion de dicha base de datos.
+
+Se podra:
+
+Añadir/eliminar/modificar Clientes
+Añadir/eliminar/modificar Vehiculos
+Añadir/modificar Operaciones a vehiculos
+
+
+
+Descripcion Base de Datos:
+
+Cliente:
+
+Dni (clave primaria)
+Nombre
+Apellidos
+Direccion
+Ciudad
+Telefono
+FechaNacimiento
+
+
+Vehiculo:
+
+IdVehiculo (clave primaria)
+Dueño (clave extrangera) 
+Modelo
+Marca
+Color
+AñoFabricacion
+
+
+Operaciones:
+
+IdOperacion (clave primaria)
+Vehiculo (clave extrangera)
+Tratamiento
+Descripcion
+Fecha entrada
+Fecha salida
+
+Usuarios:
+
+iDUsuario (clave primaria)
+Nombre
+Contraseña
+
+Descripcion de la interfaz.
+
+La aplicacion tendra una primera ventana en la que el usuario que quiera acceder deberá 
+introducir su usuario y su contraseña. 
+
+A continuacion, se abrirá una ventana con un menu de inicio en el que se podrá elegir 
+las operaciones que se quieran realizar (Cliente, Vehiculo, Operacion)
+
+La ventana Cliente poseera datos de clientes y se podrán realizar operaciones explicadas anteriormente.
+
+La ventana Vehiculo poseera los datos de un vehiculo en concreto y permitira realizar las operaciones necesarias.
+
+La ventana Operacion permite ver operaciones que se estan realizando a vehiculos.
+
