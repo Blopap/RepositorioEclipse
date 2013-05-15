@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -270,6 +271,7 @@ public class Rutinas {
 		if (! valida){
 			System.out.print("Fecha incorrecta");
 		}
+		fecha = new Date(Date.parse(sfec));
 		} while (! valida);
 	return fecha;
 	

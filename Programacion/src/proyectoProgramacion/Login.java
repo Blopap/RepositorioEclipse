@@ -1,6 +1,5 @@
 package proyectoProgramacion;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -9,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -22,7 +22,8 @@ public class Login extends JFrame {
 	private JPanel contentPane;
 	private JTextField tfUsuario;
 	private JTextField tfContrasenya;
-
+	
+	
 	/**
 	 * Launch the application.
 	 */
@@ -118,23 +119,37 @@ public class Login extends JFrame {
 		
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				if(GestorBD.comprobarContrasenya(tfUsuario.getText(),tfContrasenya.getText()))
+				{
+					MenuPrincipal p=new MenuPrincipal();
+					p.setVisible(true);
+					
+					//Abrir ventana nueva, cerrar esta.
+					dispose();
+					
+					
+				}
+				else
+				{
+					//Error en el login.
+					muestraMensaje("Usuario o contraseña erroneo");
+				}
 			}
 		});
 		
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();//Cierra la ventana
-				//System.exit(0);
+				//System.exit(0); //Cierra el programa completamente.
 			}
 		});
 		
 	}
-	private boolean comprobarContraseña()
-	{
-		boolean estado= false;
 		
-		return estado;
+	private void muestraMensaje(String msg)
+	//Muestra el mensaje msg en una ventana.
+	{
+		JOptionPane.showMessageDialog(this, msg);
 	}
 	
 }
