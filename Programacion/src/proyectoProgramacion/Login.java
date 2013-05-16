@@ -132,6 +132,7 @@ public class Login extends JFrame {
 				else
 				{
 					//Error en el login.
+					tfContrasenya.setText("");
 					muestraMensaje("Usuario o contraseña erroneo");
 				}
 			}

@@ -357,8 +357,6 @@ public class Rutinas {
 			Statement stmt=con.createStatement();
 			
 			stmt.executeUpdate(sql);
-		
-			
 
 			//con.rollback();
 			con.commit();

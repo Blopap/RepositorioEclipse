@@ -3,8 +3,11 @@ package proyectoProgramacion;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLData;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import javax.swing.JOptionPane;
 
 import rutinas.Rutinas;
 
@@ -136,6 +139,44 @@ public class GestorBD {
 			}
 		}
 		
+		return estado;
+	}
+	
+	public static boolean modificarCliente(Cliente c)
+	{
+		boolean estado=false;
+		String sql;
+		
+		Boolean s=c.getSexo();
+		
+		if(c.getFechaNacimiento()=="")
+		{			
+			sql="UPDATE  "+bdnombre+".cliente SET  " +
+					" Nombre =  '"+c.getNombre()+"' ," +
+					" Apellidos =  '"+c.getApellidos()+"' ," +
+					" Sexo =  '"+s.compareTo(false)+"' ," +//Si es hombre, sexo true, compareTo devuelve 1 cuando son distintos
+					" Direccion =  '"+c.getDireccion()+"' ," +
+					" CodigoPostal =  "+c.getCodigoPostal()+" ," +
+					" Ciudad =  '"+c.getCiudad()+"' ," +
+					" Telefono =  "+c.getTelefono()+" ," +
+					" FechaNacimiento = NULL "+
+					" WHERE  cliente.Dni =  '"+c.getDni()+"' ;";
+		}
+		else
+		{
+			sql="UPDATE  "+bdnombre+".cliente SET  " +
+					" Nombre =  '"+c.getNombre()+"' ," +
+					" Apellidos =  '"+c.getApellidos()+"' ," +
+					" Sexo =  '"+s.compareTo(false)+"' ," +//Si es hombre, sexo true, compareTo devuelve 1 cuando son distintos
+					" Direccion =  '"+c.getDireccion()+"' ," +
+					" CodigoPostal =  "+c.getCodigoPostal()+" ," +
+					" Ciudad =  '"+c.getCiudad()+"' ," +
+					" Telefono =  "+c.getTelefono()+" ," +
+					" FechaNacimiento =  '"+c.getFechaNacimiento()+"' " +
+					" WHERE  cliente.Dni =  '"+c.getDni()+"' ;";
+		}
+		estado = Rutinas.updateBD(sql, url, driver);
+				
 		return estado;
 	}
 	

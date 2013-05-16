@@ -3,6 +3,10 @@ package proyectoProgramacion;
 import java.sql.Date;
 import java.util.Vector;
 
+import javax.swing.JOptionPane;
+
+import rutinas.Rutinas;
+
 public class Cliente {
 	
 	private String dni;
@@ -113,5 +117,73 @@ public class Cliente {
 		return aux;
 	}
 	
+	public boolean insertarEnPosicion(int i,String texto)
+	{
+		boolean estado=false;
+		
+		if(i!=0)
+		{
+			if(i==1)
+			{
+				this.setNombre(texto);
+				estado=true;
+			}
+			else if(i==2)
+			{
+				this.setApellidos(texto);
+				estado=true;
+			}
+			else if(i==3)
+			{
+				if(texto=="true")
+				{
+					this.setSexo(true);
+				}
+				else this.setSexo(false);
+				estado=true;
+			}
+			else if(i==4)
+			{
+				this.setDireccion(texto);
+				estado=true;
+			}
+			else if(i==5)
+			{
+				if(Rutinas.isNumeros(texto))
+				{
+					this.setCodigoPostal(Integer.parseInt(texto));
+					estado=true;
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null, "La columna 'Codigo Postal' es numerica.");
+				}
+			}
+			else if(i==6)
+			{
+				this.setCiudad(texto);
+				estado=true;
+			}
+			else if(i==7)
+			{
+				if(Rutinas.isNumeros(texto))
+				{
+					this.setTelefono(Integer.parseInt(texto));
+					estado=true;
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null, "La columna 'Telefono' es numerica.");
+				}
+			}
+			else
+			{				
+				this.setFechaNacimiento(texto);
+				estado=true;
+			}
+		}
+			
+		return estado;
+	}
 
 }

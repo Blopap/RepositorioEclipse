@@ -23,6 +23,11 @@ import com.sun.org.apache.bcel.internal.generic.NEW;
 
 import java.awt.Font;
 import javax.swing.JTextField;
+import javax.swing.JComboBox;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class MenuPrincipal extends JFrame {
 
@@ -35,6 +40,11 @@ public class MenuPrincipal extends JFrame {
 	private JTextField tfDniBusq;
 	private JTextField tfNombreBusq;
 	private JTextField tfApellidosBusq;
+	private JTextField tfIdVehiculoBusq;
+	private JTextField tfMarcaBusq;
+	private JTextField tfModeloBusq;
+	
+	private JComboBox<String> cbDuenyoBusq;
 	
 	
 
@@ -158,15 +168,87 @@ public class MenuPrincipal extends JFrame {
 		Clientes.setLayout(gl_Clientes);
 		
 		JPanel Vehiculos = new JPanel();
+		
 		tabbedPane.addTab("Gestion Vehiculos", null, Vehiculos, null);
+		
+		JButton btnNuevoVehiculo = new JButton("Nuevo Vehiculo");
+		
+		
+		JLabel lblGestionDeVehiculos = new JLabel("Gesti\u00F3n de Vehiculos");
+		lblGestionDeVehiculos.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblGestionDeVehiculos.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		JLabel lblBuscarVehiculos = new JLabel("Buscar Vehiculos");
+		
+		JLabel lblIdvehiculo = new JLabel("Identificador Vehiculo");
+		
+		JLabel lblDueo = new JLabel("Due\u00F1o");
+		
+		JLabel lblMarca = new JLabel("Marca");
+		
+		JLabel lblModelo = new JLabel("Modelo");
+		
+		tfIdVehiculoBusq = new JTextField();
+		tfIdVehiculoBusq.setColumns(10);
+		
+		cbDuenyoBusq = new JComboBox();
+		
+		tfMarcaBusq = new JTextField();
+		tfMarcaBusq.setColumns(10);
+		
+		tfModeloBusq = new JTextField();
+		tfModeloBusq.setColumns(10);
 		GroupLayout gl_Vehiculos = new GroupLayout(Vehiculos);
 		gl_Vehiculos.setHorizontalGroup(
 			gl_Vehiculos.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 427, Short.MAX_VALUE)
+				.addGroup(gl_Vehiculos.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_Vehiculos.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblGestionDeVehiculos, GroupLayout.DEFAULT_SIZE, 527, Short.MAX_VALUE)
+						.addComponent(btnNuevoVehiculo)
+						.addGroup(gl_Vehiculos.createSequentialGroup()
+							.addGap(10)
+							.addGroup(gl_Vehiculos.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(lblBuscarVehiculos)
+								.addComponent(lblIdvehiculo, GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
+								.addComponent(lblDueo, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(lblMarca, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(lblModelo, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_Vehiculos.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(tfIdVehiculoBusq, GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
+								.addComponent(cbDuenyoBusq, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(tfMarcaBusq)
+								.addComponent(tfModeloBusq))
+							.addGap(164)))
+					.addContainerGap())
 		);
 		gl_Vehiculos.setVerticalGroup(
-			gl_Vehiculos.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 228, Short.MAX_VALUE)
+			gl_Vehiculos.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_Vehiculos.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblGestionDeVehiculos)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(lblBuscarVehiculos)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(gl_Vehiculos.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblIdvehiculo)
+						.addComponent(tfIdVehiculoBusq, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(gl_Vehiculos.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblDueo)
+						.addComponent(cbDuenyoBusq, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(gl_Vehiculos.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblMarca)
+						.addComponent(tfMarcaBusq, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(gl_Vehiculos.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblModelo)
+						.addComponent(tfModeloBusq, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
+					.addComponent(btnNuevoVehiculo)
+					.addContainerGap())
 		);
 		Vehiculos.setLayout(gl_Vehiculos);
 		
@@ -213,6 +295,31 @@ public class MenuPrincipal extends JFrame {
 			}
 		});
 		
+		//Carga los datos en el ComboBox del vehiculo
+		Vehiculos.addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentShown(ComponentEvent arg0) {
+				Vector<String> aux = GestorDatos.DniNomApClientes(); 
+				
+				cbDuenyoBusq.addItem("");
+				
+				for (int i=0;i<aux.size();i++)
+				{
+					cbDuenyoBusq.addItem(aux.get(i));
+				}
+			}
+		});
+		
+		//Inicia la agregacion de un nuevo vehiculo
+		btnNuevoVehiculo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				NuevoVehiculo frame = new NuevoVehiculo();
+				frame.setVisible(true);
+			}
+		});
+		
+		
 		
 	}
+	
 }
