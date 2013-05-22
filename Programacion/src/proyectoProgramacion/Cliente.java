@@ -1,6 +1,5 @@
 package proyectoProgramacion;
 
-import java.sql.Date;
 import java.util.Vector;
 
 import javax.swing.JOptionPane;
@@ -99,6 +98,8 @@ public class Cliente {
 	}
 	
 	public Vector<Object> trasformaCliente()
+	//Introduce los datos del cliente actual en un vector
+	//Devuelve dicho vector
 	{
 		
 		Vector<Object> aux=new Vector<Object>();
@@ -112,12 +113,12 @@ public class Cliente {
 		aux.add(this.getCiudad());
 		aux.add(this.getTelefono());
 		aux.add(this.getFechaNacimiento());
-		aux.add(this.getDni());
 		
 		return aux;
 	}
 	
 	public boolean insertarEnPosicion(int i,String texto)
+	//Inserta el dato "texto" en la posicion de la clase i.
 	{
 		boolean estado=false;
 		
@@ -156,7 +157,7 @@ public class Cliente {
 				}
 				else
 				{
-					JOptionPane.showMessageDialog(null, "La columna 'Codigo Postal' es numerica.");
+					JOptionPane.showMessageDialog(null, "La columna 'Codigo Postal' es numérica.");
 				}
 			}
 			else if(i==6)
@@ -173,7 +174,7 @@ public class Cliente {
 				}
 				else
 				{
-					JOptionPane.showMessageDialog(null, "La columna 'Telefono' es numerica.");
+					JOptionPane.showMessageDialog(null, "La columna 'Telefono' es numérica.");
 				}
 			}
 			else

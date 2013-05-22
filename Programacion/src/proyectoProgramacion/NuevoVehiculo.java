@@ -1,6 +1,6 @@
 package proyectoProgramacion;
 
-import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -10,6 +10,8 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import java.awt.Font;
+
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JTextField;
@@ -50,13 +52,13 @@ public class NuevoVehiculo extends JFrame {
 	 */
 	public NuevoVehiculo() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setTitle("Nuevo vehiculo");
+		setTitle("Nuevo vehículo");
 		setBounds(100, 100, 450, 320);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
-		JLabel lblIntroduzcaLosDatos = new JLabel("Introduzca los datos del nuevo vehiculo");
+		JLabel lblIntroduzcaLosDatos = new JLabel("Introduzca los datos del nuevo vehículo");
 		lblIntroduzcaLosDatos.setHorizontalAlignment(SwingConstants.CENTER);
 		lblIntroduzcaLosDatos.setFont(new Font("Tahoma", Font.BOLD, 15));
 		
@@ -79,12 +81,10 @@ public class NuevoVehiculo extends JFrame {
 		lblFechaDeFabricacin.setHorizontalAlignment(SwingConstants.TRAILING);
 		
 		tfIdVehiculo = new JTextField();
-		tfIdVehiculo.setColumns(10);
+		tfIdVehiculo.setColumns(10);	
 		
-		cbDuenyo = new JComboBox();
-		
-		
-		
+		cbDuenyo = new JComboBox<String>(); 
+				
 		tfMarca = new JTextField();
 		tfMarca.setColumns(10);
 		
@@ -167,14 +167,41 @@ public class NuevoVehiculo extends JFrame {
 		);
 		contentPane.setLayout(gl_contentPane);
 		
+		//Fin codigo autogenerado.
+		
+		//Introduce el siguente identificador de vehiculo en el TextField y lo desactiva
+		tfIdVehiculo.setText(""+GestorDatos.siguienteIdentificadorVehiculo());
+		tfIdVehiculo.setEditable(false);
+		
+		//Añade los datos al ComboBox
 		anyadirDatosCB();
 		
+		//Comprueba si los campos necesarios estan rellenados
+		//Si lo estan, inserta los datos en la base de datos y
+		//lo inserta en el vector local de vehiculos		
 		btnIntroducir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
+				if(comprobarVacios())
+				{
+					//Introducir los datos del Vehiculo
+					Vehiculo v = nuevoVehiculo();
+					
+					if(GestorBD.insertarVehiculo(v))
+					{
+						GestorDatos.anyadirVehiculo(v);
+						dispose();
+						JOptionPane.showMessageDialog(null, "Vehiculo introducido correctamente");
+					}
+					else
+					{
+						JOptionPane.showMessageDialog(null, "Error de insercion");
+					}
+				}
 			}
 		});
 		
+		//Cierra la ventana
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();
@@ -184,6 +211,7 @@ public class NuevoVehiculo extends JFrame {
 	}
 	
 	private void anyadirDatosCB()
+	//Carga los datos de los clientes en el ComboBox.
 	{
 		Vector<String> aux = GestorDatos.DniNomApClientes(); 
 		
@@ -195,15 +223,59 @@ public class NuevoVehiculo extends JFrame {
 	
 	private boolean comprobarVacios()
 	//Comprueba si los Textbox que no pueden estar vacios lo estan.
-	//Si alguno esta vacio pone el fondo en rojo, sino lo pone en blanco.
-	//Si todos los componentes necesarios estan rellenados, comprueba si el identificador de vehiculo no se repite.
-	//
+	//Si alguno esta vacio pone el fondo en rojo, si no lo pone en blanco.
 	{
-		boolean estado=false;
+		boolean estado=true;
 		
+		if(tfMarca.getText().equals(""))
+		{
+			tfMarca.setBackground(Color.red);
+			estado=false;
+		}
+		else tfMarca.setBackground(Color.white);
+		if(tfModelo.getText().equals(""))
+		{
+			tfModelo.setBackground(Color.red);
+			estado=false;
+		}
+		else tfModelo.setBackground(Color.white);
 		
+		if(!estado)
+		{
+			JOptionPane.showMessageDialog(this, "Algunos componentes requeridos están vacios o son incorrectos.");
+		}
 		
 		return estado;
+	}
+	
+	private Vehiculo nuevoVehiculo()
+	//Crea un cliente a partir de los datos del formulario.
+	{
+		boolean col=tfColor.getText().equals("");
+		boolean fech=tfFechaFabricacion.getText().equals("");
+		
+		String duenyo=""+cbDuenyo.getSelectedItem();
+		
+		//Obtiene solo el dni del dueño.
+		duenyo = duenyo.substring(0,duenyo.indexOf(" "));
+		
+		if(col && fech)
+		{
+			return new Vehiculo(Integer.parseInt(tfIdVehiculo.getText()), duenyo, 
+					tfMarca.getText(), tfModelo.getText(), null, null);
+		}
+		else if(col)
+		{
+			return new Vehiculo(Integer.parseInt(tfIdVehiculo.getText()), duenyo, 
+					tfMarca.getText(), tfModelo.getText(), null, tfFechaFabricacion.getText());
+		}
+		else if(fech)
+		{
+			return new Vehiculo(Integer.parseInt(tfIdVehiculo.getText()), duenyo, 
+					tfMarca.getText(), tfModelo.getText(), tfColor.getText(), null);
+		}
+		return new Vehiculo(Integer.parseInt(tfIdVehiculo.getText()), duenyo, 
+				tfMarca.getText(), tfModelo.getText(), tfColor.getText(), tfFechaFabricacion.getText());
 	}
 
 }

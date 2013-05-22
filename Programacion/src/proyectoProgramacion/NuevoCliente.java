@@ -1,6 +1,5 @@
 package proyectoProgramacion;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 
@@ -25,7 +24,6 @@ import rutinas.Rutinas;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.sql.Date;
 import java.util.Enumeration;
 
 public class NuevoCliente extends JFrame {
@@ -93,10 +91,10 @@ public class NuevoCliente extends JFrame {
 		JLabel lblSexo = new JLabel("Sexo");
 		lblSexo.setHorizontalAlignment(SwingConstants.TRAILING);
 		
-		JLabel lblDireccion = new JLabel("Direccion");
+		JLabel lblDireccion = new JLabel("Dirección");
 		lblDireccion.setHorizontalAlignment(SwingConstants.TRAILING);
 		
-		JLabel lblCodigoPostal = new JLabel("Codigo Postal");
+		JLabel lblCodigoPostal = new JLabel("Código Postal");
 		lblCodigoPostal.setHorizontalAlignment(SwingConstants.TRAILING);
 		
 		JLabel lblCiudad = new JLabel("Ciudad");
@@ -222,6 +220,9 @@ public class NuevoCliente extends JFrame {
 		);
 		contentPane.setLayout(gl_contentPane);
 		
+		//Comprueba si los campos necesarios estan rellenados
+		//Si lo estan, inserta los datos en la base de datos y
+		//lo inserta en el vector local de clientes		
 		btnIntroducir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -232,15 +233,19 @@ public class NuevoCliente extends JFrame {
 					
 					if(GestorBD.insertarCliente(c))
 					{
-						GestorDatos.añadirCliente(c);
+						GestorDatos.anyadirCliente(c);
 						dispose();
 						JOptionPane.showMessageDialog(null, "Cliente introducido correctamente");
-						
-					}					
+					}
+					else
+					{
+						JOptionPane.showMessageDialog(null, "Error de inserción");
+					}
 				}
 			}
 		});
 		
+		//Cierra la ventana
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
@@ -252,7 +257,6 @@ public class NuevoCliente extends JFrame {
 	//Comprueba si los Textbox que no pueden estar vacios lo estan.
 	//Si alguno esta vacio pone el fondo en rojo, sino lo pone en blanco.
 	//Si todos los componentes necesarios estan rellenados, comprueba si el dni no se repite.
-	//
 	{
 		boolean estado=true;
 		
@@ -312,7 +316,7 @@ public class NuevoCliente extends JFrame {
 		
 		if(!estado)
 		{
-			JOptionPane.showMessageDialog(this, "Algunos componentes requeridos estan vacios o son incorrectos.");
+			JOptionPane.showMessageDialog(this, "Algunos componentes requeridos están vacios o son incorrectos.");
 		}
 		else if (GestorDatos.existeDniCliente(tfDni.getText()))
 			//Si es true, el dni esta repetido.

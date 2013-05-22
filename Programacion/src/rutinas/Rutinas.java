@@ -11,6 +11,7 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -391,6 +392,18 @@ public class Rutinas {
 			}
 		}
     	return estado;
+    }
+    
+    public static String fechaActual()
+    //Devuelve el dia actual en formato DD/MM/AAAA
+    {
+    	Calendar c = Calendar.getInstance();
+		
+		int dia = c.get(Calendar.DAY_OF_MONTH);
+		int mes = c.get(Calendar.MONTH)+1;
+		int anyo = c.get(Calendar.YEAR);
+		
+		return dia+"/"+mes+"/"+anyo;	
     }
     
 
