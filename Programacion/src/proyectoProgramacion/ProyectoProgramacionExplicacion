@@ -1,57 +1,72 @@
-Proyecto Gestion de vehiculos.
+Proyecto Gestión de vehículos.
 
-1º Programacion DAW 2012/2013.
+1º Programación DAW 2012/2013.
 
-Gestion de vehiculos de un taller o derivados.
+Gestión de vehículos de un taller o derivados.
 
-Consistirá en una base de datos en la que se guardaran todos los datos sobre:
+Consistirá en una base de datos en la que se guardarán todos los datos sobre:
 
 Clientes
-Vehiculos
-Operaciones realizadas a dichos vehiculos
-Usuarios permitidos en la aplicacion
+Vehículos
+Operaciones realizadas a dichos vehículos
+Usuarios permitidos en la aplicación
 
-Se realizará una interfaz grafica para la gestion de dicha base de datos.
+Se realizará una interfaz gráfica para la gestión de dicha base de datos.
 
-Se podra:
+Se podrá:
 
-Añadir/eliminar/modificar Clientes
-Añadir/eliminar/modificar Vehiculos
-Añadir/modificar Operaciones a vehiculos
+Añadir/modificar Clientes
+Añadir/modificar Vehículos
+Añadir/modificar Operaciones a vehículos
 
 
 
-Descripcion Base de Datos:
+Descripción Base de Datos:
 
 Cliente:
 
 Dni (clave primaria)
 Nombre
 Apellidos
-Direccion
+Sexo
+Dirección
+Código Postal
 Ciudad
-Telefono
-FechaNacimiento
+Teléfono (NULL)
+Fecha de nacimiento (NULL)
+
+Cliente contiene datos sobre todos los clientes que tiene el taller. 
+Teléfono y Fecha de Nacimiento se permite que sean nulos.
 
 
-Vehiculo:
+Vehículo:
 
-IdVehiculo (clave primaria)
-Dueño (clave extrangera) 
-Modelo
+IdVehículo (clave primaria)
+Dueño (clave extranjera) 
 Marca
-Color
-AñoFabricacion
+Modelo
+Color (NULL)
+Fecha de fabricación (NULL)
 
+Vehículo contiene datos sobre todos los vehículos de los clientes que han entrado al taller.
+Dueño es una clave extrangera al DNI de Cliente.
+IdVehiculo es un identificador numérico que comienza por 1.
+Color y fecha de fabricación se permite que sean nulos.
 
 Operaciones:
 
-IdOperacion (clave primaria)
+IdOperación (clave primaria)
 Vehiculo (clave extrangera)
-Tratamiento
-Descripcion
-Fecha entrada
-Fecha salida
+Revisión/Cambio
+Descripción (NULL)
+Fecha entrada 
+Fecha salida (NULL)
+
+Operaciones contiene datos sobre todas las operaciones que se han realizado a los vehículos de los clientes.
+Vehículo es una clave extranjera al Identificador de la tabla Vehículo.
+IdOperación es un identificador numérico que comienza por 1.
+Revision/Cambio serán una serie de opciones a elegir por el usuario.
+Descripción y Fecha salida se permite que sean nulos.
 
 Usuarios:
 
@@ -59,17 +74,26 @@ iDUsuario (clave primaria)
 Nombre
 Contraseña
 
-Descripcion de la interfaz.
+Usuarios contiene datos sobre las personas que pueden acceder a la aplicación.
+Por simplicidad, seran introducidos manualmente por el administrador de la Base de Datos.
 
-La aplicacion tendra una primera ventana en la que el usuario que quiera acceder deberá 
-introducir su usuario y su contraseña. 
 
-A continuacion, se abrirá una ventana con un menu de inicio en el que se podrá elegir 
-las operaciones que se quieran realizar (Cliente, Vehiculo, Operacion)
+Descripción de la interfaz.
 
-La ventana Cliente poseera datos de clientes y se podrán realizar operaciones explicadas anteriormente.
+La aplicación tendrá una primera ventana en la que el usuario que quiera acceder deberá 
+introducir su nombre de usuario y su contraseña. 
 
-La ventana Vehiculo poseera los datos de un vehiculo en concreto y permitira realizar las operaciones necesarias.
+A continuación, se abrirá una ventana con un menu de inicio en el que se podrá elegir 
+las operaciones que se quieran realizar (Cliente, Vehículo, Operación)
 
-La ventana Operacion permite ver operaciones que se estan realizando a vehiculos.
+La ventana Cliente poseerá datos de clientes y se podrán realizar inserciones de nuevos clientes y búsquedas 
+de clientes, además se permitirá, una vez buscado un cliente, la modificación de este, por limitaciones 
+programáticas, no se permite modificar el DNI del cliente.
 
+La ventana Vehiculo poseerá los datos de los vehículos y se podrán realizar inserciones de nuevos vehículos y
+busquedas de vehiculos, además se permitirá, una vez buscado el vehículo, la modificación de este, por limitaciones
+programáticas, no se permite la modificación del Identificador del Vehículo ni del Dni del dueño del vehículo.
+
+La ventana Operación poseerá los datos de las operaciones realizadas a los vehículos y se prodrán realizar 
+inserciones y búsquedas de operaciones. Una vez buscado una o varias operaciones se permitirá la modificación de
+esta para añadirle la fecha de salida del vehículo, el resto de parámetros no esta permitida su modificación.

@@ -16,12 +16,13 @@ import javax.swing.SwingConstants;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JPasswordField;
 
 public class Login extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField tfUsuario;
-	private JTextField tfContrasenya;
+	private JPasswordField tfContrasenya;
 	
 	
 	/**
@@ -60,7 +61,7 @@ public class Login extends JFrame {
 		JLabel lblContrasenya = new JLabel("Contrase\u00F1a");
 		lblContrasenya.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		tfContrasenya = new JTextField();
+		tfContrasenya = new JPasswordField();
 		tfContrasenya.setColumns(10);
 		
 		JButton btnLogin = new JButton("Login");

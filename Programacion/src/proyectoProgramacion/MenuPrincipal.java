@@ -46,22 +46,22 @@ public class MenuPrincipal extends JFrame {
 	private JComboBox<String> cbOperacionesVehiculos;
 	
 	
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MenuPrincipal frame = new MenuPrincipal();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	//Main para pruebas de la ventana
+//	/**
+//	 * Launch the application.
+//	 */
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					MenuPrincipal frame = new MenuPrincipal();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
@@ -127,31 +127,27 @@ public class MenuPrincipal extends JFrame {
 							.addComponent(lblGestionDeClientes, GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE)
 							.addContainerGap())
 						.addGroup(gl_Clientes.createSequentialGroup()
+							.addGap(10)
+							.addGroup(gl_Clientes.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblDni, GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
+								.addComponent(lblBuscarClientes, GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
+								.addComponent(lblNombre, GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
+								.addComponent(lblApellidos, GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
+								.addComponent(btnBuscar, GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE))
+							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addGroup(gl_Clientes.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(btnNuevoCliente, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)
-								.addGroup(gl_Clientes.createSequentialGroup()
-									.addGap(10)
-									.addGroup(gl_Clientes.createParallelGroup(Alignment.LEADING)
-										.addComponent(lblDni, GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE)
-										.addComponent(lblBuscarClientes, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-										.addComponent(lblNombre, GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE)
-										.addComponent(lblApellidos, GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE)
-										.addComponent(btnBuscar, GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE))))
-							.addGroup(gl_Clientes.createParallelGroup(Alignment.TRAILING)
-								.addGroup(gl_Clientes.createSequentialGroup()
-									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addGroup(gl_Clientes.createParallelGroup(Alignment.LEADING, false)
-										.addComponent(tfApellidosBusq)
-										.addComponent(tfNombreBusq)
-										.addComponent(tfDniBusq, GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE))
-									.addContainerGap(306, Short.MAX_VALUE))
-								.addGroup(gl_Clientes.createSequentialGroup()
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(btnCerrar, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
-									.addContainerGap())))))
+								.addComponent(tfApellidosBusq)
+								.addComponent(tfNombreBusq)
+								.addComponent(tfDniBusq, GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE))
+							.addContainerGap(303, Short.MAX_VALUE))
+						.addGroup(gl_Clientes.createSequentialGroup()
+							.addComponent(btnNuevoCliente, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, 312, Short.MAX_VALUE)
+							.addComponent(btnCerrar, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap())))
 		);
 		gl_Clientes.setVerticalGroup(
-			gl_Clientes.createParallelGroup(Alignment.TRAILING)
+			gl_Clientes.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_Clientes.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(lblGestionDeClientes)
@@ -171,7 +167,7 @@ public class MenuPrincipal extends JFrame {
 						.addComponent(tfApellidosBusq, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(btnBuscar)
-					.addPreferredGap(ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
 					.addGroup(gl_Clientes.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnNuevoCliente)
 						.addComponent(btnCerrar))
@@ -241,13 +237,13 @@ public class MenuPrincipal extends JFrame {
 								.addComponent(tfModeloBusq))
 							.addGap(164))
 						.addGroup(gl_Vehiculos.createSequentialGroup()
-							.addComponent(btnNuevoVehiculo, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, 327, Short.MAX_VALUE)
+							.addComponent(btnNuevoVehiculo, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, 299, Short.MAX_VALUE)
 							.addComponent(btnCerrar_1, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap())))
+							.addGap(23))))
 		);
 		gl_Vehiculos.setVerticalGroup(
-			gl_Vehiculos.createParallelGroup(Alignment.TRAILING)
+			gl_Vehiculos.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_Vehiculos.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(lblGestionDeVehiculos)
@@ -315,9 +311,9 @@ public class MenuPrincipal extends JFrame {
 							.addContainerGap()
 							.addGroup(gl_Operaciones.createParallelGroup(Alignment.LEADING)
 								.addComponent(lblGestinDeOperaciones, GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE)
-								.addGroup(gl_Operaciones.createSequentialGroup()
-									.addComponent(btnNuevaOperacin, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED, 327, Short.MAX_VALUE)
+								.addGroup(Alignment.TRAILING, gl_Operaciones.createSequentialGroup()
+									.addComponent(btnNuevaOperacin, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED, 281, Short.MAX_VALUE)
 									.addComponent(btnCerrar_2, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE))))
 						.addGroup(gl_Operaciones.createSequentialGroup()
 							.addGap(23)
@@ -422,25 +418,26 @@ public class MenuPrincipal extends JFrame {
 		//Busca vehiculos utilizando los datos de los textBox
 		btnBuscar_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(GestorDatos.comprobarDatosVehiculo(tfIdVehiculoBusq.getText(), tfMarcaBusq.getText(), tfModeloBusq.getText()))
-				{
-					String duenyo = ""+cbDuenyoBusq.getSelectedItem();
-					
-					if(GestorDatos.existeDuenyoVehiculo(duenyo))
+				if(Rutinas.isNumeros(tfIdVehiculoBusq.getText()))
+				{				
+					if(GestorDatos.comprobarDatosVehiculo(tfIdVehiculoBusq.getText(), tfMarcaBusq.getText(), tfModeloBusq.getText()))
 					{
-						if(!duenyo.equals(""))
-						{							
-							duenyo = GestorDatos.ComboBoxDuenyo(duenyo);
+						String duenyo = ""+cbDuenyoBusq.getSelectedItem();
+						
+						if(GestorDatos.existeDuenyoVehiculo(duenyo))
+						{
+							if(!duenyo.equals(""))
+							{							
+								duenyo = GestorDatos.ComboBoxDuenyo(duenyo);
+							}
+							TablaVehiculos frame = new TablaVehiculos(GestorDatos.obtenerDatosVehiculo(tfIdVehiculoBusq.getText(),duenyo ,tfMarcaBusq.getText(), tfModeloBusq.getText()));
+							frame.setVisible(true);
 						}
-						TablaVehiculos frame = new TablaVehiculos(GestorDatos.obtenerDatosVehiculo(tfIdVehiculoBusq.getText(),duenyo ,tfMarcaBusq.getText(), tfModeloBusq.getText()));
-						frame.setVisible(true);
+						else JOptionPane.showMessageDialog(null, "El cliente seleccionado no tiene vehículos en la Base de Datos");
 					}
-					else JOptionPane.showMessageDialog(null, "El cliente seleccionado no tiene vehículos en la Base de Datos");
+					else JOptionPane.showMessageDialog(null, "Datos no coincidentes.");
 				}
-				else
-				{
-					JOptionPane.showMessageDialog(null, "Datos no coincidentes.");
-				}
+				else JOptionPane.showMessageDialog(null, "El Identificador del vehiculo es un número");
 			}
 		});
 		

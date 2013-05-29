@@ -39,21 +39,22 @@ public class NuevoCliente extends JFrame {
 	private JTextField tfTelefono;
 	private JTextField tfFechaNacimiento;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					NuevoCliente frame = new NuevoCliente();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	//Main para pruebas de la ventana
+//	/**
+//	 * Launch the application.
+//	 */
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					NuevoCliente frame = new NuevoCliente();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
@@ -287,7 +288,7 @@ public class NuevoCliente extends JFrame {
 			estado=false;
 		}
 		else tfDireccion.setBackground(Color.white);
-		if(!Rutinas.isNumeros(tfCodigoPostal.getText()))
+		if(tfCodigoPostal.getText().equals("") || !Rutinas.isNumeros(tfCodigoPostal.getText()))
 		{
 			tfCodigoPostal.setBackground(Color.red);
 			estado=false;

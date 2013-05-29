@@ -27,21 +27,22 @@ public class TablaVehiculos extends JFrame {
 	private JButton btnModificar;
 	private JButton btnAceptar;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TablaVehiculos frame = new TablaVehiculos(new Vector<Vehiculo>());
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	//Main para pruebas de la ventana
+//	/**
+//	 * Launch the application.
+//	 */
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					TablaVehiculos frame = new TablaVehiculos(new Vector<Vehiculo>());
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.

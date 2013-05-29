@@ -240,9 +240,26 @@ public class GestorBD {
 	{
 		Boolean s=c.getSexo();
 		
+		String sql;
 		
-		
-		String sql="INSERT INTO "+bdnombre+".`cliente` " +
+		if(c.getFechaNacimiento()==null)
+		{
+			sql="INSERT INTO "+bdnombre+".`cliente` " +
+					"(`Dni`, `Nombre`, `Apellidos`, `Sexo`, `Direccion`, " +
+					"`CodigoPostal`, `Ciudad`, `Telefono`, `FechaNacimiento`) " +
+					"VALUES ('"+c.getDni()+"', " +
+							"'"+c.getNombre()+"', " +
+							"'"+c.getApellidos()+"', " +
+							"'"+s.compareTo(false)+"', " +//Si es hombre, sexo true, compareTo devuelve 1 cuando son distintos
+							"'"+c.getDireccion()+"', " +
+							"'"+c.getCodigoPostal()+"', " +
+							"'"+c.getCiudad()+"', " +
+							""+c.getTelefono()+" , " +
+							""+c.getFechaNacimiento()+" );";
+		}
+		else
+		{
+			sql="INSERT INTO "+bdnombre+".`cliente` " +
 				"(`Dni`, `Nombre`, `Apellidos`, `Sexo`, `Direccion`, " +
 				"`CodigoPostal`, `Ciudad`, `Telefono`, `FechaNacimiento`) " +
 				"VALUES ('"+c.getDni()+"', " +
@@ -253,9 +270,8 @@ public class GestorBD {
 						"'"+c.getCodigoPostal()+"', " +
 						"'"+c.getCiudad()+"', " +
 						""+c.getTelefono()+" , " +
-						""+c.getFechaNacimiento()+" );";
-		
-		
+						"'"+c.getFechaNacimiento()+"' );";
+		}		
 		
 		return Rutinas.updateBD(sql, url, driver);
 	}
@@ -265,15 +281,60 @@ public class GestorBD {
 	public static boolean insertarVehiculo(Vehiculo v)
 	//Inserta los datos del vehiculo v en la base de datos
 	{
-		String sql="INSERT INTO  "+bdnombre+".`vehiculo` " +
-				"(`IdVehiculo` ,`Duenyo` ,`Marca` ,`Modelo` , " +
-				"`Color` ,`FechaFabricacion`) " +
-				"VALUES ('"+v.getIdVehiculo()+"',  " +
-				"'"+v.getDuenyo()+"',  " +
-				"'"+v.getMarca()+"',  " +
-				"'"+v.getModelo()+"',  " +
-				"'"+v.getColor()+"',  " +
-				"'"+v.getFechaFabricacion()+"');";
+		//Obtiene si el color o la fecha de fabricacion del vehiculo son nulos.
+		boolean color = v.getColor()==null;
+		boolean fechfab = v.getFechaFabricacion()==null;
+		
+		String sql;
+		
+		if(color && fechfab)
+		{
+			sql="INSERT INTO  "+bdnombre+".`vehiculo` " +
+					"(`IdVehiculo` ,`Duenyo` ,`Marca` ,`Modelo` , " +
+					"`Color` ,`FechaFabricacion`) " +
+					"VALUES ('"+v.getIdVehiculo()+"',  " +
+					"'"+v.getDuenyo()+"',  " +
+					"'"+v.getMarca()+"',  " +
+					"'"+v.getModelo()+"',  " +
+					""+v.getColor()+",  " +
+					""+v.getFechaFabricacion()+");";
+		}
+		else if(color)
+		{
+			sql="INSERT INTO  "+bdnombre+".`vehiculo` " +
+					"(`IdVehiculo` ,`Duenyo` ,`Marca` ,`Modelo` , " +
+					"`Color` ,`FechaFabricacion`) " +
+					"VALUES ('"+v.getIdVehiculo()+"',  " +
+					"'"+v.getDuenyo()+"',  " +
+					"'"+v.getMarca()+"',  " +
+					"'"+v.getModelo()+"',  " +
+					""+v.getColor()+",  " +
+					"'"+v.getFechaFabricacion()+"');";
+		}
+		else if(fechfab)
+		{
+			sql="INSERT INTO  "+bdnombre+".`vehiculo` " +
+					"(`IdVehiculo` ,`Duenyo` ,`Marca` ,`Modelo` , " +
+					"`Color` ,`FechaFabricacion`) " +
+					"VALUES ('"+v.getIdVehiculo()+"',  " +
+					"'"+v.getDuenyo()+"',  " +
+					"'"+v.getMarca()+"',  " +
+					"'"+v.getModelo()+"',  " +
+					"'"+v.getColor()+"',  " +
+					""+v.getFechaFabricacion()+");";
+		}
+		else
+		{
+			sql="INSERT INTO  "+bdnombre+".`vehiculo` " +
+					"(`IdVehiculo` ,`Duenyo` ,`Marca` ,`Modelo` , " +
+					"`Color` ,`FechaFabricacion`) " +
+					"VALUES ('"+v.getIdVehiculo()+"',  " +
+					"'"+v.getDuenyo()+"',  " +
+					"'"+v.getMarca()+"',  " +
+					"'"+v.getModelo()+"',  " +
+					"'"+v.getColor()+"',  " +
+					"'"+v.getFechaFabricacion()+"');";
+		}
 		
 		return Rutinas.updateBD(sql, url, driver);
 	}
@@ -340,9 +401,6 @@ public class GestorBD {
 		
 		boolean fechaFab = v.getFechaFabricacion()==null || v.getFechaFabricacion().isEmpty();
 		
-		
-		//fechaN=c.getFechaNacimiento()==null || c.getFechaNacimiento().isEmpty();
-		
 		if(color && fechaFab)
 		{
 			sql = "UPDATE  "+bdnombre+".vehiculo SET  " +
@@ -391,15 +449,34 @@ public class GestorBD {
 	public static boolean insertarOperacion(Operacion o)
 	//Inserta una nueva operacion en la base de datos
 	{
-		String sql = "INSERT INTO "+bdnombre+".`operacionesvehiculos` " +
-				"(`IdOperacion`, `Vehiculo`, `RevCambio`, " +
-				"`Descripcion`, `FechaEntrada`, `FechaSalida`) " +
-				"VALUES ("+o.getIdOperacion()+", " +
-				""+o.getVehiculo()+", " +
-				""+o.getRevCambio()+", " +
-				"'"+o.getDescripcion()+"', " +
-				"'"+o.getFechaEntrada()+"', " +
-				""+o.getFechaSalida()+" );";
+		//Obtiene si la descripcion es nula.
+		boolean desc = o.getDescripcion()==null;
+		String sql;
+		
+		if(desc)
+		{
+			sql = "INSERT INTO "+bdnombre+".`operacionesvehiculos` " +
+					"(`IdOperacion`, `Vehiculo`, `RevCambio`, " +
+					"`Descripcion`, `FechaEntrada`, `FechaSalida`) " +
+					"VALUES ("+o.getIdOperacion()+", " +
+					""+o.getVehiculo()+", " +
+					""+o.getRevCambio()+", " +
+					""+o.getDescripcion()+", " +
+					"'"+o.getFechaEntrada()+"', " +
+					""+o.getFechaSalida()+" );";
+		}
+		else
+		{
+			sql = "INSERT INTO "+bdnombre+".`operacionesvehiculos` " +
+					"(`IdOperacion`, `Vehiculo`, `RevCambio`, " +
+					"`Descripcion`, `FechaEntrada`, `FechaSalida`) " +
+					"VALUES ("+o.getIdOperacion()+", " +
+					""+o.getVehiculo()+", " +
+					""+o.getRevCambio()+", " +
+					"'"+o.getDescripcion()+"', " +
+					"'"+o.getFechaEntrada()+"', " +
+					""+o.getFechaSalida()+" );";
+		}
 		return Rutinas.updateBD(sql, url, driver);
 		
 	}
